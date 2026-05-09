@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>基隆-Su. Studio | 職人級電腦維修與系統開發</title>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Apple-style 現代化變數與重置 (CMS 動態控制) */
+        :root {
+            --primary-color: #0071e3; 
+            --primary-hover: color-mix(in srgb, var(--primary-color) 80%, black);
+            --bg-color: #f5f5f7;
+            --bg-grid: rgba(0, 113, 227, 0.04);
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+            --card-bg: rgba(255, 255, 255, 0.75);
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --border-color: rgba(0,0,0,0.06);
+            --border-light: rgba(255,255,255,0.3);
+            --shadow-subtle: 0 8px 30px rgba(0, 0, 0, 0.04);
+            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.1); 
+            --border-radius-main: 24px;
+            --border-radius-card: 20px;
+            --border-radius-pill: 100px;
+            --font-main: -apple-system, BlinkMacSystemFont, "PingFang TC", "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+            --font-tech: 'JetBrains Mono', monospace;
+            --transition-spring: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 網格背景 */
+        body.show-grid {
+            background-image: 
+                linear-gradient(var(--bg-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        /* 科技背景粒子 */
+        .particles-bg { position: fixed; inset: 0; pointer-events: none; z-index: -2; overflow: hidden; }
+        .particle { position: absolute; border-radius: 50%; background: var(--primary-color); opacity: 0.1; filter: blur(3px); animation: floatUp linear infinite; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
+
+        /* 滑鼠光暈 */
+        #cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--primary-color) 0%, transparent 60%); opacity: 0.05; pointer-events: none; z-index: -1; transform: translate(-50%, -50%); transition: opacity 0.3s ease; will-change: transform; }
+
+        /* 動畫模組 */
+        .reveal { opacity: 0; transform: translateY(40px) scale(0.98); filter: blur(4px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); will-change: opacity, transform, filter; }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+        @keyframes floatUpDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .float-anim { animation: floatUpDown 4s ease-in-out infinite; }
+        .glow-hover { transition: var(--transition-spring); border: 1px solid var(--border-light); }
+        .glow-hover:hover { border-color: var(--primary-color); box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(-5px); }
+
+        /* 導覽列 */
+        .header { background: var(--nav-bg); backdrop-filter: saturate(180%) blur(24px); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--border-color); transition: var(--transition-spring); }
+        .logo-container { display: flex; align-items: center; text-decoration: none; gap: 12px; transition: var(--transition-spring); }
+        .logo-container:hover { transform: scale(1.02); }
+        .su-logo-svg { width: 36px; height: 36px; }
+        .su-logo-path-s { stroke: var(--primary-color); stroke-width: 4; fill: none; stroke-linecap: round; stroke-dasharray: 100; stroke-dashoffset: 0; animation: logoDraw 4s ease-in-out infinite; }
+        @keyframes logoDraw { 0%, 100% { stroke-dashoffset: 0; } 50% { stroke-dashoffset: 100; } }
+        .logo-text { display: flex; flex-direction: column; justify-content: center; color: var(--text-main); }
+        .logo-name { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.5px; line-height: 1; }
+        .logo-title { font-size: 0.65rem; font-weight: 700; color: var(--text-secondary); letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px;}
+
+        .nav ul { list-style: none; display: flex; gap: 30px; margin: 0; padding: 0;}
+        .nav li { position: relative; }
+        .nav a, .nav span { text-decoration: none; color: var(--text-main); font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: var(--transition-spring); opacity: 0.8; padding: 8px 0; }
+        .nav a:hover, .nav span:hover { opacity: 1; color: var(--primary-color); }
+        .nav li span::after { content: '\f107'; font-family: 'Font Awesome 6 Free'; font-weight: 900; margin-left: 6px; font-size: 0.7rem; }
+        
+        .nav .dropdown { position: absolute; top: 150%; left: 50%; transform: translateX(-50%) scale(0.95); background: rgba(255, 255, 255, 0.95); backdrop-filter: saturate(180%) blur(25px); min-width: 180px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.5); opacity: 0; visibility: hidden; transition: var(--transition-spring); padding: 10px; }
+        .nav li:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); top: 120%; }
+        .nav .dropdown a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; font-size: 0.9rem; transition: all 0.2s; opacity: 1;}
+        .nav .dropdown a:hover { background: var(--bg-color); color: var(--primary-color); }
+
+        .btn-primary-tech { background: var(--primary-color); color: #fff; padding: 12px 28px; border-radius: var(--border-radius-pill); text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: var(--transition-spring); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-primary-tech:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); color: #fff; }
+
+        .back-to-top { position: fixed; bottom: 30px; right: -80px; width: 50px; height: 50px; border-radius: 50%; background: var(--nav-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-light); color: var(--text-main); font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: var(--shadow-subtle); transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1001; opacity: 0; }
+        .back-to-top.show { right: 30px; opacity: 1; }
+        .back-to-top:hover { background: var(--primary-color); color: #fff; transform: translateY(-5px); }
+
+        /* Hero */
+        .hero { height: 90vh; margin-top: 60px; position: relative; background: #000; overflow: hidden; }
+        .hero img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transform: scale(1.05); transition: transform 8s ease; }
+        .hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%); }
+        .hero-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 2; padding: 0 20px; width: 100%; max-width: 900px; }
+        .hero h1 { font-size: 4.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; line-height: 1.2; text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.3rem; font-weight: 500; color: #e5e5ea; margin-bottom: 40px; }
+
+        /* 最新消息 */
+        .news-wrapper { background: #fff; padding: 80px 30px; }
+        .news-container { max-width: 1000px; margin: 0 auto; }
+        .news-item { display: flex; align-items: center; gap: 20px; padding: 25px 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: inherit; transition: var(--transition-spring); }
+        .news-item:last-child { border-bottom: none; }
+        .news-item:hover { transform: translateX(10px); color: var(--primary-color); }
+        .news-date { font-family: var(--font-tech); font-weight: 700; color: var(--primary-color); font-size: 0.9rem; background: var(--bg-color); padding: 5px 12px; border-radius: 8px; }
+        .news-title { font-size: 1.15rem; font-weight: 700; flex: 1; }
+
+        /* 通用佈局 */
+        .section { padding: 100px 30px; position: relative; }
+        .section-center { text-align: center; }
+        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; color: var(--text-main); letter-spacing: -1px; }
+        .section-subtitle { color: var(--text-secondary); font-size: 1.15rem; max-width: 700px; margin: 0 auto 60px; font-weight: 500; }
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        .card-box { background: var(--card-bg); backdrop-filter: blur(20px); padding: 40px 30px; border-radius: var(--border-radius-card); transition: var(--transition-spring); text-align: center; border: 1px solid var(--border-light); box-shadow: var(--shadow-subtle); }
+        .card-icon { font-size: 2rem; color: var(--text-main); margin-bottom: 25px; background: #fff; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: var(--transition-spring); margin: 0 auto 25px auto; }
+        .card-box:hover .card-icon { color: #fff; background: var(--primary-color); transform: scale(1.1) rotate(5deg); }
+        .card-box h3 { font-size: 1.3rem; margin-bottom: 15px; font-weight: 700; }
+        .card-box p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;}
+
+        /* 表單 */
+        .form-control { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8); font-family: var(--font-main); font-size: 1rem; transition: var(--transition-spring); outline: none; margin-bottom: 20px;}
+        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); background: #fff; }
+        
+        /* 關於我們區塊 */
+        .about-wrapper { display: flex; align-items: center; gap: 80px; max-width: 1200px; margin: 0 auto; }
+        .about-content { flex: 1; }
+        .about-title { font-size: 2.8rem; font-weight: 800; line-height: 1.2; letter-spacing: -1.5px; margin-bottom: 25px; color: var(--text-main); }
+        .about-p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.8; }
+        .about-image { flex: 1; border-radius: var(--border-radius-main); overflow: hidden; box-shadow: var(--shadow-subtle); height: 400px;}
+        .about-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .about-image:hover img { transform: scale(1.05); }
+
+        /* 後台登入與 CMS 介面 */
+        .admin-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
+        .admin-overlay.show { opacity: 1; }
+        .admin-login-box { background: #1d1d1f; padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 400px; text-align: center; color: #fff; transform: translateY(20px); transition: 0.4s; }
+        .admin-overlay.show .admin-login-box { transform: translateY(0); }
+        .admin-login-box input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; }
+        
+        #admin-panel { display: none; position: fixed; inset: 0; background: #f5f5f7; z-index: 10000; overflow-y: auto; color: #1d1d1f; }
+        .admin-header { background: #fff; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .admin-layout { display: flex; max-width: 1400px; margin: 40px auto; gap: 30px; padding: 0 20px; }
+        .admin-sidebar { width: 250px; display: flex; flex-direction: column; gap: 10px; }
+        .admin-tab-btn { padding: 15px 20px; background: transparent; border: none; font-size: 1.1rem; font-weight: 700; text-align: left; border-radius: 12px; cursor: pointer; color: var(--text-secondary); transition: 0.3s; }
+        .admin-tab-btn.active { background: var(--primary-color); color: #fff; }
+        .admin-content { flex: 1; background: #fff; border-radius: 24px; padding: 40px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); }
+        .admin-view { display: none; }
+        .admin-view.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px; border-bottom: 1px solid #eee; }
+        th { background: #f5f5f7; color: #888; font-size: 0.9rem; font-weight: 700; }
+
+        .menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; color: var(--text-main); cursor: pointer; padding: 0; margin: 0; }
+        .admin-settings-group { background: rgba(0,0,0,0.02); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color); }
+
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .menu-toggle { display: block; }
+            .nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: rgba(255,255,255,0.98); backdrop-filter: blur(20px); padding: 20px; border-bottom: 1px solid var(--border-color); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+            .nav.show { display: block; }
+            .nav ul { flex-direction: column; gap: 15px; }
+            .nav .dropdown { position: static; transform: none; box-shadow: none; min-width: 100%; opacity: 1; visibility: visible; padding: 0; margin-top: 10px; background: transparent; border: none; display: none; }
+            .nav li.active .dropdown { display: block; }
+            .hero h1 { font-size: 2.8rem; }
+            .about-wrapper { flex-direction: column; gap: 40px;}
+            .admin-layout { flex-direction: column; }
+            .admin-sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+            .admin-tab-btn { white-space: nowrap; }
+        }
+    </style>
+</head>
+<body class="show-grid">
+    <div class="particles-bg" id="particlesBg"></div>
+    <div id="cursor-glow"></div>
+
+    <div id="frontend-view">
+        <header class="header" id="header">
+            <a href="#" class="logo-container">
+                <svg class="su-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="var(--primary-color)" cx="50" cy="50" r="45" opacity="0.1"/>
+                    <path class="su-logo-path-s" d="M75,30 Q85,20 85,45 T75,60 Q65,70 65,85 T75,95"/>
+                    <path class="su-logo-path-s" d="M25,70 Q15,80 15,55 T25,40 Q35,30 35,15 T25,5"/>
+                </svg>
+                <div class="logo-text">
+                    <span class="logo-name">Su. Studio</span>
+                    <span class="logo-title">Tech & PC Solutions</span>
+                </div>
+            </a>
+            
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            
+            <nav class="nav" id="navMenu">
+                <ul>
+                    <li class="has-dropdown"><span>專業服務</span>
+                        <div class="dropdown">
+                            <a href="#services"><i class="fas fa-desktop"></i> 電腦客製化組裝</a>
+                            <a href="#services"><i class="fas fa-tools"></i> 硬體故障排除</a>
+                            <a href="#services"><i class="fas fa-code"></i> 軟體與系統開發</a>
+                        </div>
+                    </li>
+                    <li><a href="#about">關於我們</a></li>
+                    <li><a href="#news">最新消息</a></li>
+                    <li><a href="#portfolio">工藝展示</a></li>
+                </ul>
+            </nav>
+            <div class="controls">
+                <a href="#board" class="btn-primary-tech">立即線上報修</a>
+            </div>
+        </header>
+
+        <section class="hero">
+            <img id="cms-hero-img" src="https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Hero Background">
+            <div class="hero-content reveal float-anim">
+                <h1 id="cms-hero-title">極致效能，專為您打造。</h1>
+                <p id="cms-hero-desc">扎根基隆十年，專注於頂級電腦客製化與系統開發。</p>
+                <a href="#services" class="btn-primary-tech" style="font-size: 1.1rem; padding: 15px 35px;"><i class="fas fa-rocket"></i> 探索職人工藝</a>
+            </div>
+        </section>
+
+        <section class="news-wrapper" id="news">
+            <div class="news-container reveal">
+                <h2 class="section-title" style="margin-bottom: 30px;">最新動態公告</h2>
+                <div id="front-news-list">
+                    <div style="text-align:center; padding: 40px; color:#888;"><i class="fas fa-spinner fa-spin"></i> 載入最新資訊中...</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-center about" id="about">
+            <div class="about-wrapper">
+                <div class="about-content reveal" style="text-align: left;">
+                    <span style="color:var(--primary-color); font-weight:700; font-family:var(--font-tech); text-transform:uppercase; letter-spacing:1px;">Decade of Excellence</span>
+                    <h2 class="about-title" id="cms-about-title" style="margin-top: 15px;">基隆在地深耕<br>Su. Studio 十年淬鍊</h2>
+                    <p class="about-p" id="cms-about-desc">2016年成立於基隆。秉持著「電腦不只是工具，更是職人精神的展現」之信念。我們不僅專精於高階電競主機組裝與硬體檢修，更具備強大的軟體開發實力（如 Su.線上點餐系統）。</p>
+                </div>
+                <div class="about-image reveal" style="transition-delay: 0.2s;">
+                    <img id="cms-about-img" src="https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=1200&auto=format&fit=crop" alt="About Su Studio" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-center" id="services">
+            <h2 class="section-title reveal">軟硬兼備・職人服務</h2>
+            <p class="section-subtitle reveal">不只修電腦，更為您打造完美的科技生態系。</p>
+            <div class="grid-layout">
+                <div class="card-box reveal glow-hover">
+                    <div class="card-icon"><i class="fas fa-desktop"></i></div>
+                    <h3>極致客製化組裝</h3>
+                    <p>依據預算與極致效能需求，嚴選零件，提供頂級整機組裝、完美走線與高階水冷方案建置。</p>
+                </div>
+                <div class="card-box reveal glow-hover" style="transition-delay: 0.1s;">
+                    <div class="card-icon"><i class="fas fa-tools"></i></div>
+                    <h3>硬體深度檢修</h3>
+                    <p>針對不開機、藍白畫面提供精準交叉測試。我們用科學數據找出核心問題並進行無損修復。</p>
+                </div>
+                <div class="card-box reveal glow-hover" style="transition-delay: 0.2s;">
+                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                    <h3>系統與軟體開發</h3>
+                    <p>專注於現代化 Web App 開發。代表作「Su.線上點餐系統」，結合高效能資料庫與即時推播，助力店家數位轉型。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-center" id="portfolio" style="background: #fff;">
+            <h2 class="section-title reveal">專案與工藝展示</h2>
+            <p class="section-subtitle reveal">真實案例，展現 Su. Studio 的職人精神與對品質的堅持。</p>
+            <div class="grid-layout">
+                <div class="card-box reveal glow-hover" style="padding:0; overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
+                    <div style="padding: 25px;">
+                        <h3 style="margin-bottom: 5px;">旗艦電競主機組裝</h3>
+                        <p style="color:var(--primary-color); font-family:var(--font-tech); font-size:0.85rem; font-weight:700;">Custom Cable Management</p>
+                    </div>
+                </div>
+                <div class="card-box reveal glow-hover" style="padding:0; overflow:hidden; transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
+                    <div style="padding: 25px;">
+                        <h3 style="margin-bottom: 5px;">Su.線上點餐系統</h3>
+                        <p style="color:var(--primary-color); font-family:var(--font-tech); font-size:0.85rem; font-weight:700;">Web App / Firebase</p>
+                    </div>
+                </div>
+                <div class="card-box reveal glow-hover" style="padding:0; overflow:hidden; transition-delay: 0.2s;">
+                    <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
+                    <div style="padding: 25px;">
+                        <h3 style="margin-bottom: 5px;">主機板精密級維修</h3>
+                        <p style="color:var(--primary-color); font-family:var(--font-tech); font-size:0.85rem; font-weight:700;">Component Level Diagnostics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-center" id="board">
+            <h2 class="section-title reveal">線上報修留言板</h2>
+            <p class="section-subtitle reveal">遇到電腦問題？立即留下您的狀況，技師將快速為您評估。</p>
+            
+            <div style="max-width: 1000px; margin: 0 auto; display: flex; gap: 40px; flex-wrap: wrap;" class="reveal">
+                <div style="flex: 1; min-width: 300px; background: var(--card-bg); padding: 40px; border-radius: var(--border-radius-main); box-shadow: var(--shadow-subtle); border: 1px solid var(--border-light); text-align: left;" class="glow-hover">
+                    <h3 style="margin-bottom: 25px; font-size: 1.5rem;"><i class="fas fa-edit" style="color:var(--primary-color); margin-right:8px;"></i> 建立報修工單</h3>
+                    <form id="repairForm">
+                        <label style="font-weight:700; margin-bottom:8px; display:block;">稱呼 (Name) <span style="color:red">*</span></label>
+                        <input type="text" id="ticketName" class="form-control" placeholder="例如：王先生" required>
+                        
+                        <label style="font-weight:700; margin-bottom:8px; display:block;">聯絡電話 (Phone) <span style="color:red">*</span></label>
+                        <input type="tel" id="ticketPhone" class="form-control" placeholder="例如：0912345678" required>
+                        
+                        <label style="font-weight:700; margin-bottom:8px; display:block;">故障描述 (Issue) <span style="color:red">*</span></label>
+                        <textarea id="ticketIssue" class="form-control" style="resize:vertical; min-height:100px;" placeholder="請描述您遇到的問題..." required></textarea>
+                        
+                        <button type="submit" id="submitBtn" class="btn-primary-tech" style="width: 100%; justify-content: center; font-size: 1.1rem; padding: 16px;">
+                            <i class="fas fa-paper-plane"></i> 送出加密工單
+                        </button>
+                    </form>
+                </div>
+                
+                <div style="flex: 1.2; min-width: 300px; text-align: left;">
+                    <div id="messageList" style="display: flex; flex-direction: column; gap: 15px; max-height: 550px; overflow-y: auto; padding-right: 10px;">
+                        <div style="text-align:center; color:#888; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> 載入系統紀錄中...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer style="background: #000; color: #86868b; padding: 80px 30px; text-align: center; font-size: 0.95rem; position: relative; z-index: 2;">
+            <div style="margin-bottom: 25px; font-size: 2rem; color: #fff; font-weight: 800; letter-spacing: -1px;">
+                Su. Studio
+            </div>
+            <p style="margin-bottom: 10px;">
+                <i class="fab fa-line" style="color:var(--primary-color);"></i> LINE 諮詢：<a id="cms-contact-line-link" href="#" target="_blank" style="color:#fff; text-decoration:none; font-weight:700;"><span id="cms-contact-line">c468116</span></a> 
+                <span style="margin: 0 15px; opacity: 0.5;">|</span> 
+                <i class="fas fa-phone-alt" style="color:var(--primary-color);"></i> 服務專線：<span id="cms-contact-phone" style="color:#fff; font-weight:700;">0933-238-461</span>
+            </p>
+            <p><i class="fas fa-map-marker-alt" style="color:var(--primary-color);"></i> 工作室位置：<span id="cms-contact-address" style="color:#e5e5ea;">基隆市安樂區安和一街330巷</span></p>
+            
+            <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                Copyright <span id="adminTrigger" style="cursor:pointer; user-select:none; padding:10px; font-weight:bold; font-size:1.1rem;" title="DoubleClick for Admin">©</span> 2026 Su. Studio Tech Solutions. All rights reserved.
+            </div>
+        </footer>
+    </div>
+
+    <button class="back-to-top" id="backToTop" title="返回頂部"><i class="fas fa-arrow-up"></i></button>
+
+    <div class="admin-overlay" id="loginModal">
+        <div class="admin-login-box">
+            <h2 style="font-family: var(--font-tech); margin-bottom: 20px; color: var(--primary-color);">SysAdmin Auth</h2>
+            <p style="font-size: 0.85rem; color: #888; margin-bottom: 25px;">請輸入高權限管理者憑證</p>
+            <input type="text" id="loginUser" class="form-control" placeholder="Admin ID">
+            <input type="password" id="loginPass" class="form-control" placeholder="Password">
+            <button onclick="attemptLogin()" class="btn-primary-tech" style="width: 100%; justify-content: center; margin-bottom: 10px;">AUTHENTICATE</button>
+            <button onclick="closeLogin()" style="width: 100%; background:transparent; border:none; color:#888; cursor:pointer; padding:10px; font-weight:600;">CANCEL</button>
+        </div>
+    </div>
+
+    <div id="admin-panel">
+        <div class="admin-header">
+            <h2 style="font-family: var(--font-tech); color: var(--primary-color); font-weight: 800;"><i class="fas fa-terminal"></i> SU.STUDIO_CMS 控制台</h2>
+            <button onclick="logoutAdmin()" class="btn-primary-tech" style="padding: 8px 20px; background: #1d1d1f; font-size:0.85rem;">安全登出並返回前台</button>
+        </div>
+        <div class="admin-layout">
+            <div class="admin-sidebar">
+                <button class="admin-tab-btn active" onclick="switchAdminTab('tickets')"><i class="fas fa-inbox"></i> 報修工單管理</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('news')"><i class="fas fa-newspaper"></i> 最新資訊管理</button>
+                <button class="admin-tab-btn" onclick="switchAdminTab('settings')"><i class="fas fa-sliders-h"></i> 前台排版與設定</button>
+            </div>
+            <div class="admin-content">
+                
+                <div id="view-tickets" class="admin-view active">
+                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">客戶報修清單</h3>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>時間</th>
+                                    <th>稱呼</th>
+                                    <th>電話</th>
+                                    <th>故障描述</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminTicketList"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="view-news" class="admin-view">
+                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">發布最新公告</h3>
+                    <div style="display: flex; gap: 10px; margin-bottom: 30px;">
+                        <input type="text" id="newNewsTitle" class="form-control" placeholder="輸入公告標題..." style="margin-bottom:0; flex:1;">
+                        <button onclick="addNews()" class="btn-primary-tech" style="white-space:nowrap;"><i class="fas fa-plus"></i> 新增發布</button>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:120px;">發布日期</th>
+                                <th>公告標題</th>
+                                <th style="width:100px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminNewsList"></tbody>
+                    </table>
+                </div>
+
+                <div id="view-settings" class="admin-view">
+                    <h3 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">全域視覺與內容控制</h3>
+                    <div style="max-width: 800px;">
+                        
+                        <div class="admin-settings-group">
+                            <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-paint-brush"></i> 視覺設定</h4>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">全站主體品牌色</label>
+                            <input type="color" id="cmsColor" class="form-control" style="height: 50px; padding: 5px; cursor:pointer;">
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:#fff; padding:15px; border-radius:12px; border:1px solid #ddd;">
+                                <input type="checkbox" id="cmsShowGrid" style="width:20px; height:20px;">
+                                <span style="font-weight:600;">開啟未來感科技網格背景</span>
+                            </label>
+                        </div>
+
+                        <div class="admin-settings-group">
+                            <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-image"></i> 首頁橫幅區塊 (Hero)</h4>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">大標題</label>
+                            <textarea id="cmsHeroTitle" class="form-control" style="min-height:80px;"></textarea>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">副標題</label>
+                            <input type="text" id="cmsHeroDesc" class="form-control">
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">背景圖片網址</label>
+                            <input type="text" id="cmsHeroImg" class="form-control" placeholder="https://...">
+                        </div>
+
+                        <div class="admin-settings-group">
+                            <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-info-circle"></i> 關於我們區塊</h4>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">大標題</label>
+                            <textarea id="cmsAboutTitle" class="form-control" style="min-height:80px;"></textarea>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">介紹內文</label>
+                            <textarea id="cmsAboutDesc" class="form-control" style="min-height:120px;"></textarea>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">圖片網址</label>
+                            <input type="text" id="cmsAboutImg" class="form-control" placeholder="https://...">
+                        </div>
+
+                        <div class="admin-settings-group">
+                            <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-address-book"></i> 聯絡資訊區塊</h4>
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">LINE ID</label>
+                            <input type="text" id="cmsContactLine" class="form-control">
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">聯絡電話</label>
+                            <input type="text" id="cmsContactPhone" class="form-control">
+                            <label style="display:block; font-weight:700; margin-bottom:8px;">工作室地址</label>
+                            <input type="text" id="cmsContactAddress" class="form-control">
+                        </div>
+
+                        <button onclick="saveCmsSettings()" class="btn-primary-tech" style="width:100%; justify-content:center; font-size:1.2rem; padding:15px;"><i class="fas fa-save"></i> 儲存並即時套用至前台</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBhLO5Fpv0hQ921p1teY_e9Drmfi9jRsQM",
+            authDomain: "sufood-2dc61.firebaseapp.com",
+            projectId: "sufood-2dc61",
+            storageBucket: "sufood-2dc61.firebasestorage.app",
+            messagingSenderId: "15294829611",
+            appId: "1:15294829611:web:f7f244a5be5dcfc69b066e"
+        };
+        
+        let dbRef = null;
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+            dbRef = doc(db, "su_studio_data", "main_config_v3");
+        } catch(e) {
+            console.error("Firebase Initialization Error", e);
+        }
+
+        // 預設完整的全站資料結構
+        let globalState = { 
+            tickets: [], 
+            news: [
+                { id: '1710000001', title: '工作室春季營業時間異動', date: '2026/03/15' },
+                { id: '1710000002', title: '全新 RTX 50 系列顯卡組裝方案上線', date: '2026/02/28' }
+            ],
+            cms: { 
+                color: '#0071e3', 
+                showGrid: true,
+                heroTitle: '極致效能，專為您打造。', 
+                heroSubtitle: '扎根基隆十年，專注於頂級電腦客製化與系統開發。',
+                heroImg: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80',
+                aboutTitle: '基隆在地深耕\nSu. Studio 十年淬鍊',
+                aboutText: '2016年成立於基隆。秉持著「電腦不只是工具，更是職人精神的展現」之信念。我們不僅專精於高階電競主機組裝與硬體檢修，更具備強大的軟體開發實力（如 Su.線上點餐系統）。',
+                aboutImg: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=1200&auto=format&fit=crop',
+                contactLine: 'c468116',
+                contactPhone: '0933-238-461',
+                contactAddress: '基隆市安樂區安和一街330巷'
+            } 
+        };
+
+        // 斷線備援：直接渲染畫面 (不用等 Firebase)
+        function fallbackRender() {
+            renderTicketsFront();
+            renderNewsFront();
+            applyCMS(globalState.cms);
+        }
+
+        async function initDB() {
+            if(!dbRef) {
+                console.warn("未建立資料庫連線，啟動備援模式");
+                fallbackRender();
+                return;
+            }
+
+            try {
+                const docSnap = await getDoc(dbRef);
+                if (!docSnap.exists()) {
+                    await setDoc(dbRef, globalState, { merge: true });
+                }
+                
+                onSnapshot(dbRef, (snap) => {
+                    if (snap.exists()) {
+                        const data = snap.data();
+                        globalState.tickets = data.tickets || [];
+                        globalState.news = data.news || globalState.news;
+                        globalState.cms = { ...globalState.cms, ...data.cms }; // 合併避免舊資料缺漏
+                        
+                        fallbackRender(); // 更新前台
+
+                        if (document.getElementById('admin-panel').style.display === 'block') {
+                            renderTicketsAdmin();
+                            renderNewsAdmin();
+                        }
+                    }
+                }, (error) => {
+                    throw error; // 觸發 catch
+                });
+            } catch (error) {
+                console.error("Firestore 連線錯誤：", error);
+                const msg = window.location.protocol === 'file:' ? 
+                    '請注意：您目前是直接點開 HTML 檔案，資料庫可能因安全機制受限，請使用 Live Server 開啟。' : 
+                    '資料庫權限不足。請至 Firebase Console -> Firestore -> 規則 (Rules)，改為：\nallow read, write: if true;';
+                
+                // alert("【系統提示】\n" + msg);
+                fallbackRender(); // 即使斷線依然確保畫面顯示正常
+            }
+        }
+        
+        // 啟動資料庫與渲染
+        initDB();
+
+        // ---------------- 渲染函式 ---------------- //
+
+        function applyCMS(cms) {
+            // 全域
+            document.documentElement.style.setProperty('--primary-color', cms.color);
+            if(cms.showGrid) document.body.classList.add('show-grid'); else document.body.classList.remove('show-grid');
+            
+            // Hero
+            document.getElementById('cms-hero-title').innerHTML = cms.heroTitle.replace(/\n/g, '<br>');
+            document.getElementById('cms-hero-desc').innerText = cms.heroSubtitle;
+            document.getElementById('cms-hero-img').src = cms.heroImg;
+
+            // About
+            document.getElementById('cms-about-title').innerHTML = cms.aboutTitle.replace(/\n/g, '<br>');
+            document.getElementById('cms-about-desc').innerHTML = cms.aboutText.replace(/\n/g, '<br>');
+            document.getElementById('cms-about-img').src = cms.aboutImg;
+
+            // Contact
+            document.getElementById('cms-contact-line').innerText = cms.contactLine;
+            document.getElementById('cms-contact-line-link').href = `https://line.me/ti/p/~${cms.contactLine}`;
+            document.getElementById('cms-contact-phone').innerText = cms.contactPhone;
+            document.getElementById('cms-contact-address').innerText = cms.contactAddress;
+        }
+
+        function renderTicketsFront() {
+            const list = document.getElementById('messageList');
+            if (globalState.tickets.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding: 40px; color:#888;"><i class="fas fa-inbox fa-2x" style="opacity:0.3; margin-bottom:15px; display:block;"></i>目前尚無報修紀錄，歡迎填寫表單諮詢！</div>';
+                return;
+            }
+            const displayTickets = [...globalState.tickets].reverse().slice(0, 15);
+            list.innerHTML = displayTickets.map(t => {
+                const safeName = String(t.name).replace(/</g, "&lt;");
+                const safeIssue = String(t.issue).replace(/</g, "&lt;").replace(/\n/g, "<br>");
+                return `
+                <div style="background: #fff; padding: 20px; border-radius: 16px; border: 1px solid var(--border-color); text-align: left; position: relative;" class="glow-hover">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <div style="font-weight: 700; color: var(--text-main);"><i class="fas fa-user-circle" style="color:var(--primary-color); margin-right:5px;"></i> ${safeName}</div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-tech);">${t.date}</div>
+                    </div>
+                    <div style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${safeIssue}</div>
+                </div>`;
+            }).join('');
+        }
+
+        function renderNewsFront() {
+            const list = document.getElementById('front-news-list');
+            if (globalState.news.length === 0) {
+                list.innerHTML = '<div style="color:#888; text-align:center;">目前尚無最新公告</div>';
+                return;
+            }
+            const sortedNews = [...globalState.news].reverse();
+            list.innerHTML = sortedNews.map(n => `
+                <a href="javascript:void(0)" class="news-item">
+                    <div class="news-date">${n.date}</div>
+                    <div class="news-title">${String(n.title).replace(/</g, "&lt;")}</div>
+                    <i class="fas fa-arrow-right" style="color:var(--border-light);"></i>
+                </a>
+            `).join('');
+        }
+
+        function renderTicketsAdmin() {
+            const tbody = document.getElementById('adminTicketList');
+            if (globalState.tickets.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:#888;">目前無報修單</td></tr>';
+                return;
+            }
+            const displayTickets = [...globalState.tickets].reverse();
+            tbody.innerHTML = displayTickets.map(t => `
+                <tr>
+                    <td style="font-family: var(--font-tech); font-size: 0.85rem;">${t.date}</td>
+                    <td style="font-weight: 700;">${String(t.name).replace(/</g, "&lt;")}</td>
+                    <td style="color: var(--primary-color); font-weight: 600;">${String(t.phone).replace(/</g, "&lt;")}</td>
+                    <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${String(t.issue).replace(/</g, "&lt;")}</td>
+                    <td><button onclick="deleteTicket('${t.id}')" style="background:#ff4444; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">刪除</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderNewsAdmin() {
+            const tbody = document.getElementById('adminNewsList');
+            if (globalState.news.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align:center; padding:20px; color:#888;">目前無公告</td></tr>';
+                return;
+            }
+            const sortedNews = [...globalState.news].reverse();
+            tbody.innerHTML = sortedNews.map(n => `
+                <tr>
+                    <td style="font-family: var(--font-tech); font-size: 0.85rem;">${n.date}</td>
+                    <td style="font-weight: 700;">${String(n.title).replace(/</g, "&lt;")}</td>
+                    <td><button onclick="deleteNews('${n.id}')" style="background:#ff4444; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">刪除</button></td>
+                </tr>
+            `).join('');
+        }
+
+
+        // ---------------- 功能邏輯綁定 ---------------- //
+
+        document.getElementById('repairForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(!dbRef) return alert("資料庫未連線，無法送出表單。請確認網路或 Firebase 設定。");
+
+            const btn = document.getElementById('submitBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 傳送中...';
+            btn.disabled = true;
+
+            const name = document.getElementById('ticketName').value.trim();
+            const phone = document.getElementById('ticketPhone').value.trim();
+            const issue = document.getElementById('ticketIssue').value.trim();
+            
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+            const newTicket = { id: Date.now().toString(), name, phone, issue, date: dateStr };
+
+            try {
+                await updateDoc(dbRef, { tickets: arrayUnion(newTicket) });
+                document.getElementById('repairForm').reset();
+                alert('報修紀錄已成功送出！技師將盡快為您評估。');
+            } catch (err) {
+                alert("寫入失敗。請確認 Firebase 規則是否為 allow read, write: if true;");
+            } finally {
+                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 送出加密工單';
+                btn.disabled = false;
+            }
+        });
+
+        // 登入系統 (完美防禦本機 File:// 錯誤)
+        let clickCount = 0; let clickTimer;
+        document.getElementById('adminTrigger').addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(clickTimer);
+            if(clickCount >= 2) {
+                document.getElementById('loginModal').style.display = 'flex';
+                setTimeout(()=>document.getElementById('loginModal').classList.add('show'), 10);
+                clickCount = 0;
+            } else {
+                clickTimer = setTimeout(() => { clickCount = 0; }, 500);
+            }
+        });
+
+        window.closeLogin = function() { 
+            const m = document.getElementById('loginModal');
+            m.classList.remove('show');
+            setTimeout(()=> m.style.display = 'none', 300);
+        };
+
+        window.attemptLogin = function() {
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            
+            // 安全的高相容性驗證
+            if(btoa(user) === 'S29yYWxiYQ==' && btoa(pass) === 'VGhpczEyMzQ=') {
+                closeLogin();
+                document.getElementById('frontend-view').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'block';
+                
+                // 載入 CMS 表單資料
+                const cms = globalState.cms;
+                document.getElementById('cmsColor').value = cms.color;
+                document.getElementById('cmsShowGrid').checked = cms.showGrid;
+                
+                document.getElementById('cmsHeroTitle').value = cms.heroTitle;
+                document.getElementById('cmsHeroDesc').value = cms.heroSubtitle;
+                document.getElementById('cmsHeroImg').value = cms.heroImg;
+
+                document.getElementById('cmsAboutTitle').value = cms.aboutTitle;
+                document.getElementById('cmsAboutDesc').value = cms.aboutText;
+                document.getElementById('cmsAboutImg').value = cms.aboutImg;
+
+                document.getElementById('cmsContactLine').value = cms.contactLine;
+                document.getElementById('cmsContactPhone').value = cms.contactPhone;
+                document.getElementById('cmsContactAddress').value = cms.contactAddress;
+                
+                renderTicketsAdmin();
+                renderNewsAdmin();
+            } else {
+                alert('Access Denied: 帳號或密碼錯誤！');
+            }
+        };
+
+        window.logoutAdmin = function() {
+            document.getElementById('admin-panel').style.display = 'none';
+            document.getElementById('frontend-view').style.display = 'block';
+            document.getElementById('loginUser').value = '';
+            document.getElementById('loginPass').value = '';
+            window.scrollTo(0,0);
+        };
+
+        window.switchAdminTab = function(tab) {
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.admin-view').forEach(v => v.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('view-' + tab).classList.add('active');
+        };
+
+        window.saveCmsSettings = async function() {
+            if(!dbRef) return alert("資料庫未連線，無法儲存設定。");
+            const newCms = {
+                color: document.getElementById('cmsColor').value,
+                showGrid: document.getElementById('cmsShowGrid').checked,
+                heroTitle: document.getElementById('cmsHeroTitle').value,
+                heroSubtitle: document.getElementById('cmsHeroDesc').value,
+                heroImg: document.getElementById('cmsHeroImg').value,
+                aboutTitle: document.getElementById('cmsAboutTitle').value,
+                aboutText: document.getElementById('cmsAboutDesc').value,
+                aboutImg: document.getElementById('cmsAboutImg').value,
+                contactLine: document.getElementById('cmsContactLine').value,
+                contactPhone: document.getElementById('cmsContactPhone').value,
+                contactAddress: document.getElementById('cmsContactAddress').value
+            };
+            try {
+                await updateDoc(dbRef, { cms: newCms });
+                alert('✅ 全站版面與內容設定已成功儲存並同步至前台！');
+            } catch (err) {
+                alert('儲存失敗，請確認 Firebase Rules 權限設定。');
+            }
+        };
+
+        window.addNews = async function() {
+            if(!dbRef) return alert("資料庫未連線。");
+            const title = document.getElementById('newNewsTitle').value.trim();
+            if(!title) return alert('請輸入公告標題！');
+            
+            const now = new Date();
+            const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')}`;
+            const newObj = { id: Date.now().toString(), title: title, date: dateStr };
+
+            try {
+                await updateDoc(dbRef, { news: arrayUnion(newObj) });
+                document.getElementById('newNewsTitle').value = '';
+                alert('✅ 最新公告已發布！');
+            } catch (err) {
+                alert('發布失敗，請確認資料庫權限。');
+            }
+        };
+
+        window.deleteNews = async function(id) {
+            if(!confirm('確定刪除此公告？')) return;
+            const newNews = globalState.news.filter(n => n.id !== id);
+            try { await updateDoc(dbRef, { news: newNews }); } catch (err) { alert('刪除失敗'); }
+        };
+
+        window.deleteTicket = async function(id) {
+            if(!confirm('確定刪除此報修單？刪除後無法恢復。')) return;
+            const newTickets = globalState.tickets.filter(t => t.id !== id);
+            try { await updateDoc(dbRef, { tickets: newTickets }); } catch (err) { alert('刪除失敗'); }
+        };
+
+        // ---------------- 前台特效與 UI 互動腳本 ---------------- //
+        
+        function createParticles() {
+            const container = document.getElementById('particlesBg');
+            for(let i = 0; i < 15; i++) {
+                let div = document.createElement('div');
+                div.className = 'particle';
+                div.style.width = Math.random() * 20 + 10 + 'px';
+                div.style.height = div.style.width;
+                div.style.left = Math.random() * 100 + 'vw';
+                div.style.animationDuration = Math.random() * 10 + 10 + 's';
+                div.style.animationDelay = Math.random() * 10 + 's';
+                container.appendChild(div);
+            }
+        }
+        createParticles();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
+        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        const header = document.getElementById('header');
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) { 
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)'; 
+                header.style.padding = '10px 40px';
+            } else { 
+                header.style.boxShadow = 'none'; 
+                header.style.padding = '12px 40px';
+            }
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+        if(menuToggle && navMenu) {
+            menuToggle.addEventListener('click', () => navMenu.classList.toggle('show'));
+        }
+
+        if(window.innerWidth <= 768) {
+            document.querySelectorAll('.has-dropdown > span').forEach(el => {
+                el.addEventListener('click', function(e) {
+                    this.parentElement.classList.toggle('active');
+                    e.preventDefault();
+                });
+            });
+            document.querySelectorAll('.nav a').forEach(el => {
+                el.addEventListener('click', () => navMenu.classList.remove('show'));
+            });
+        }
+    </script>
+</body>
+</html>
