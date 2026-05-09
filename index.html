@@ -3,61 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>基隆-Su. Studio | 職人級電腦維修與系統開發</title>
+    <title>基隆-Su. Studio | 職人級電腦維修與系統建置</title>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://images.unsplash.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* ================= 核心變數與全域設定 ================= */
+        /* ================= 核心變數與全域設定 (iOS 26 Style) ================= */
         :root {
             --primary-color: #0071e3; 
-            --primary-hover: color-mix(in srgb, var(--primary-color) 80%, black);
-            --bg-color: #f5f5f7;
-            --bg-grid: rgba(0, 113, 227, 0.04);
+            --primary-hover: #0077ED;
+            --bg-color: #F5F5F7;
+            --bg-grid: rgba(0, 113, 227, 0.05);
             --text-main: #1d1d1f;
             --text-secondary: #86868b;
-            --card-bg: rgba(255, 255, 255, 0.75);
-            --nav-bg: rgba(255, 255, 255, 0.85);
-            --border-color: rgba(0,0,0,0.06);
-            --border-light: rgba(255,255,255,0.3);
-            --shadow-subtle: 0 8px 30px rgba(0, 0, 0, 0.04);
-            --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.1); 
-            --border-radius-main: 24px;
-            --border-radius-card: 20px;
+            --card-bg: rgba(255, 255, 255, 0.65);
+            --nav-bg: rgba(255, 255, 255, 0.75);
+            --border-color: rgba(0, 0, 0, 0.04);
+            --border-light: rgba(255, 255, 255, 0.6);
+            --shadow-subtle: 0 10px 40px -10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 20px 50px -10px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.04); 
+            --border-radius-main: 28px;
+            --border-radius-card: 24px;
             --border-radius-pill: 100px;
-            --font-main: -apple-system, BlinkMacSystemFont, "PingFang TC", "Helvetica Neue", "Microsoft JhengHei", sans-serif;
+            --font-main: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, "PingFang TC", "Helvetica Neue", sans-serif;
             --font-tech: 'JetBrains Mono', monospace;
-            --transition-spring: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition-spring: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        body { 
-            font-family: var(--font-main); background-color: var(--bg-color); color: var(--text-main); 
-            line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; width: 100%;
-        }
-        body.show-grid { background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px), linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px); background-size: 30px 30px; }
+        body { font-family: var(--font-main); background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; }
+        body.show-grid { background-image: linear-gradient(var(--bg-grid) 1px, transparent 1px), linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px); background-size: 32px 32px; }
 
         /* 背景與游標特效 */
         .particles-bg { position: fixed; inset: 0; pointer-events: none; z-index: -2; overflow: hidden; }
-        .particle { position: absolute; border-radius: 50%; background: var(--primary-color); opacity: 0.1; filter: blur(3px); animation: floatUp linear infinite; }
+        .particle { position: absolute; border-radius: 50%; background: var(--primary-color); opacity: 0.1; filter: blur(4px); animation: floatUp linear infinite; }
         @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 20% { opacity: 0.15; } 80% { opacity: 0.1; } 100% { transform: translateY(-10vh) scale(1.5); opacity: 0; } }
-        
-        #cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--primary-color) 0%, transparent 60%); opacity: 0.05; pointer-events: none; z-index: -1; transform: translate(-50%, -50%); transition: opacity 0.3s ease; will-change: transform; display: none; }
+        #cursor-glow { position: fixed; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, var(--primary-color) 0%, transparent 60%); opacity: 0.06; pointer-events: none; z-index: -1; transform: translate(-50%, -50%); transition: opacity 0.3s ease; will-change: transform; display: none; }
         @media (hover: hover) and (pointer: fine) { #cursor-glow { display: block; } }
 
-        /* 動畫模組 */
+        /* 毛玻璃與動畫模組 */
+        .glass-panel { background: var(--card-bg); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%); border: 1px solid var(--border-light); }
+        .gradient-text { background: linear-gradient(135deg, #1d1d1f 0%, #434353 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
         .reveal { opacity: 0; transform: translateY(30px) scale(0.98); filter: blur(4px); transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); will-change: opacity, transform, filter; }
         .reveal.active { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
-        @keyframes floatUpDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        .float-anim { animation: floatUpDown 4s ease-in-out infinite; }
-        .glow-hover { transition: var(--transition-spring); border: 1px solid var(--border-light); }
-        .glow-hover:hover { border-color: var(--primary-color); box-shadow: 0 10px 30px rgba(0,0,0,0.08); transform: translateY(-5px); }
+        
+        .glow-hover { transition: var(--transition-spring); }
+        .glow-hover:hover { border-color: rgba(0, 113, 227, 0.3); box-shadow: var(--shadow-hover); transform: translateY(-4px) scale(1.01); }
 
-        /* ================= 導覽列 (PC版) ================= */
-        .header { background: var(--nav-bg); backdrop-filter: saturate(180%) blur(24px); -webkit-backdrop-filter: saturate(180%) blur(24px); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--border-color); transition: var(--transition-spring); }
+        /* ================= 導覽列 ================= */
+        .header { background: var(--nav-bg); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%); padding: 12px 40px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; border-bottom: 1px solid var(--border-color); transition: var(--transition-spring); }
         .logo-container { display: flex; align-items: center; text-decoration: none; gap: 12px; transition: var(--transition-spring); }
         .logo-container:hover { transform: scale(1.02); }
         .su-logo-svg { width: 36px; height: 36px; }
@@ -74,69 +72,64 @@
         .nav a:hover, .nav span:hover { opacity: 1; color: var(--primary-color); }
         .nav li span::after { content: '\f107'; font-family: 'Font Awesome 6 Free'; font-weight: 900; margin-left: 6px; font-size: 0.7rem; transition: transform 0.3s; display: inline-block; }
         
-        .nav .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(255, 255, 255, 0.95); backdrop-filter: saturate(180%) blur(25px); min-width: 220px; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.5); opacity: 0; visibility: hidden; transition: var(--transition-spring); padding: 10px; z-index: 100;}
+        .nav .dropdown { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: rgba(255, 255, 255, 0.90); backdrop-filter: blur(40px) saturate(200%); -webkit-backdrop-filter: blur(40px) saturate(200%); min-width: 220px; border-radius: 20px; box-shadow: var(--shadow-hover); border: 1px solid var(--border-light); opacity: 0; visibility: hidden; transition: var(--transition-spring); padding: 12px; z-index: 100;}
         .nav li.dropdown-container:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        .nav .dropdown a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; font-size: 0.9rem; transition: all 0.2s; opacity: 1; margin-bottom: 2px; color: var(--text-main);}
+        .nav .dropdown a { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 12px; font-size: 0.95rem; transition: all 0.2s; opacity: 1; margin-bottom: 2px;}
         .nav .dropdown a i { color: var(--primary-color); width: 18px; text-align: center; transition: 0.2s; opacity: 0.7;}
-        .nav .dropdown a:hover { background: var(--bg-color); color: var(--primary-color); transform: translateX(5px);}
+        .nav .dropdown a:hover { background: rgba(0, 113, 227, 0.05); color: var(--primary-color); transform: translateX(5px);}
         .nav .dropdown a:hover i { opacity: 1; transform: scale(1.1);}
 
-        .btn-primary-tech { background: var(--primary-color); color: #fff; padding: 12px 28px; border-radius: var(--border-radius-pill); text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition-spring); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        .btn-primary-tech:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); color: #fff; }
+        .btn-primary-tech { background: var(--primary-color); color: #fff; padding: 12px 28px; border-radius: var(--border-radius-pill); text-decoration: none; font-size: 0.95rem; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: var(--transition-spring); border: none; cursor: pointer; box-shadow: 0 4px 15px rgba(0, 113, 227, 0.2); }
+        .btn-primary-tech:hover { background: var(--primary-hover); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 113, 227, 0.3); color: #fff; }
 
         .back-to-top { position: fixed; bottom: 30px; right: -80px; width: 50px; height: 50px; border-radius: 50%; background: var(--nav-bg); backdrop-filter: blur(20px); border: 1px solid var(--border-light); color: var(--text-main); font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: var(--shadow-subtle); transition: all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); z-index: 1001; opacity: 0; }
         .back-to-top.show { right: 30px; opacity: 1; }
-        .back-to-top:hover { background: var(--primary-color); color: #fff; transform: translateY(-5px); }
+        .back-to-top:hover { background: var(--primary-color); color: #fff; transform: translateY(-5px); border-color: transparent;}
 
         /* ================= 幻燈片 Hero (Swiper) ================= */
-        .hero { height: 90vh; margin-top: 60px; position: relative; background: #000; overflow: hidden; width: 100%;}
+        .hero { height: 90vh; margin-top: 60px; position: relative; background: #000; overflow: hidden; }
         .swiper-container { width: 100%; height: 100%; }
         .swiper-slide { position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; width: 100%; height: 100%;}
         .swiper-slide img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transform: scale(1.1); transition: transform 6s ease-out; }
         .swiper-slide-active img { transform: scale(1); opacity: 0.6;}
-        .swiper-slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.6) 100%); pointer-events: none;}
+        .swiper-slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #111 0%, transparent 50%, rgba(0,0,0,0.6) 100%); pointer-events: none;}
         
         .hero-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #fff; z-index: 10; padding: 0 20px; width: 100%; max-width: 900px; opacity: 0; transition: all 1s ease 0.5s; }
         .swiper-slide-active .hero-content { opacity: 1; }
         .hero h1 { font-size: 4.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; line-height: 1.2; text-shadow: 0 4px 30px rgba(0,0,0,0.8); }
         .hero p { font-size: 1.3rem; font-weight: 500; color: #e5e5ea; margin-bottom: 40px; text-shadow: 0 2px 10px rgba(0,0,0,0.5);}
         
-        .swiper-pagination-bullet { background: #fff; opacity: 0.4; }
-        .swiper-pagination-bullet-active { background: var(--primary-color); opacity: 1; }
+        .swiper-pagination-bullet { background: #fff; opacity: 0.4; transition: var(--transition-spring); }
+        .swiper-pagination-bullet-active { background: var(--primary-color); opacity: 1; width: 24px; border-radius: 10px;}
 
         /* ================= 頁面通用與區塊 ================= */
-        .section { padding: 100px 30px; position: relative; width: 100%; box-sizing: border-box;}
+        .section { padding: 100px 30px; position: relative; }
         .section-center { text-align: center; }
-        .section-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; color: var(--text-main); letter-spacing: -1px; }
+        .section-title { font-size: 2.8rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
         .section-subtitle { color: var(--text-secondary); font-size: 1.15rem; max-width: 700px; margin: 0 auto 60px; font-weight: 500; }
-        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; width: 100%;}
+        .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
         
-        .card-box { background: var(--card-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px 30px; border-radius: var(--border-radius-card); transition: var(--transition-spring); text-align: center; border: 1px solid var(--border-light); box-shadow: var(--shadow-subtle); display: flex; flex-direction: column; align-items: center; width: 100%; box-sizing: border-box;}
-        .card-icon { font-size: 2rem; color: var(--text-main); margin-bottom: 25px; background: #fff; width: 70px; height: 70px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: var(--transition-spring); }
-        .card-box:hover .card-icon { color: #fff; background: var(--primary-color); transform: scale(1.1) rotate(5deg); }
-        .card-box h3 { font-size: 1.3rem; margin-bottom: 15px; font-weight: 700; }
-        .card-box p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;}
+        .card-box { padding: 40px 30px; border-radius: var(--border-radius-card); text-align: center; display: flex; flex-direction: column; align-items: center;}
+        .card-icon { font-size: 2rem; color: var(--primary-color); margin-bottom: 25px; background: rgba(0, 113, 227, 0.08); width: 75px; height: 75px; display: flex; justify-content: center; align-items: center; border-radius: 50%; transition: var(--transition-spring); }
+        .card-box:hover .card-icon { color: #fff; background: var(--primary-color); transform: scale(1.1) rotate(5deg); box-shadow: 0 10px 20px rgba(0, 113, 227, 0.3); }
+        .card-box h3 { font-size: 1.4rem; margin-bottom: 15px; font-weight: 700; color: var(--text-main); }
+        .card-box p { color: var(--text-secondary); font-size: 1rem; line-height: 1.6;}
 
         /* 表單 */
-        .form-group { width: 100%; margin-bottom: 20px; text-align: left; }
-        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
-        .form-control { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.8); font-family: var(--font-main); font-size: 1rem; transition: var(--transition-spring); outline: none; box-sizing: border-box;}
-        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0,113,227,0.1); background: #fff; }
-        textarea.form-control { resize: vertical; min-height: 120px; }
+        .form-group { width: 100%; margin-bottom: 25px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 10px; font-weight: 600; color: var(--text-main); font-size: 0.95rem; }
+        .form-control { width: 100%; padding: 16px 20px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.08); background: rgba(255,255,255,0.8); font-family: var(--font-main); font-size: 1rem; transition: var(--transition-spring); outline: none; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);}
+        .form-control:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(0,113,227,0.15); background: #fff; }
+        textarea.form-control { resize: vertical; min-height: 140px; }
         
         /* 關於我們 */
-        .about-wrapper { display: flex; align-items: center; gap: 60px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap; width: 100%; box-sizing: border-box;}
-        .about-content { flex: 1 1 100%; min-width: 300px; text-align: left;}
-        .about-title { font-size: 2.8rem; font-weight: 800; line-height: 1.2; letter-spacing: -1.5px; margin-bottom: 25px; color: var(--text-main); }
-        .about-p { font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.8; }
-        .about-image { flex: 1 1 100%; min-width: 300px; border-radius: var(--border-radius-main); overflow: hidden; box-shadow: var(--shadow-subtle); height: 400px; position: relative;}
-        .about-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .about-wrapper { display: flex; align-items: center; gap: 60px; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;}
+        .about-content { flex: 1; min-width: 300px; text-align: left;}
+        .about-title { font-size: 3.2rem; font-weight: 800; line-height: 1.2; letter-spacing: -1.5px; margin-bottom: 25px; }
+        .about-p { font-size: 1.15rem; color: var(--text-secondary); margin-bottom: 40px; line-height: 1.8; }
+        .about-image { flex: 1; min-width: 300px; border-radius: var(--border-radius-main); overflow: hidden; box-shadow: var(--shadow-hover); height: 450px; position: relative;}
+        .about-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
         .about-image:hover img { transform: scale(1.05); }
-
-        @media (min-width: 769px) {
-            .about-content { flex: 1; }
-            .about-image { flex: 1; }
-        }
 
         /* ================= SPA: 公告與索引系統 ================= */
         .breadcrumb { font-family: var(--font-tech); font-size: 0.9rem; margin-bottom: 30px; color: var(--text-secondary); }
@@ -144,8 +137,8 @@
         .breadcrumb a:hover { text-decoration: underline; }
         .breadcrumb span { color: var(--text-main); font-weight: 600; }
 
-        .news-wrapper { background: #fff; padding: 80px 30px; width: 100%; box-sizing: border-box;}
-        .news-container { max-width: 1000px; margin: 0 auto; width: 100%;}
+        .news-wrapper { background: #fff; padding: 80px 30px; }
+        .news-container { max-width: 1000px; margin: 0 auto; }
         .news-header-flex { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 30px; border-bottom: 2px solid var(--border-color); padding-bottom: 15px; flex-wrap: wrap; gap: 15px;}
         .news-header-flex h2 { margin-bottom: 0; }
         .more-link { font-family: var(--font-tech); font-weight: 700; color: var(--primary-color); text-decoration: none; transition: 0.3s; cursor: pointer; }
@@ -154,33 +147,45 @@
         .news-item { display: flex; align-items: center; gap: 20px; padding: 25px 0; border-bottom: 1px solid var(--border-color); text-decoration: none; color: inherit; transition: var(--transition-spring); cursor: pointer; flex-wrap: wrap;}
         .news-item:last-child { border-bottom: none; }
         .news-item:hover { transform: translateX(10px); color: var(--primary-color); }
-        .news-date { font-family: var(--font-tech); font-weight: 700; color: var(--primary-color); font-size: 0.9rem; background: var(--bg-color); padding: 5px 12px; border-radius: 8px; flex-shrink: 0; }
+        .news-date { font-family: var(--font-tech); font-weight: 700; color: var(--primary-color); font-size: 0.9rem; background: rgba(0, 113, 227, 0.08); padding: 6px 14px; border-radius: 10px; flex-shrink: 0; }
         .news-title { font-size: 1.15rem; font-weight: 700; flex: 1; min-width: 200px;}
 
-        .year-divider { font-size: 2rem; font-family: var(--font-tech); font-weight: 800; color: var(--border-color); margin: 40px 0 10px 0; }
+        .year-divider { font-size: 2.2rem; font-family: var(--font-tech); font-weight: 800; color: var(--border-color); margin: 50px 0 20px 0; }
 
-        .spa-view { display: none; padding-top: 100px; min-height: 80vh; max-width: 1000px; margin: 0 auto; padding-left: 20px; padding-right: 20px; box-sizing: border-box; width: 100%;}
+        .spa-view { display: none; padding-top: 100px; min-height: 80vh; max-width: 1000px; margin: 0 auto; padding-left: 20px; padding-right: 20px;}
         .spa-view.active { display: block; animation: fadeIn 0.4s ease; }
 
-        .news-detail-header { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color); }
-        .news-detail-title { font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px; line-height: 1.3;}
-        .news-detail-date { font-family: var(--font-tech); color: var(--primary-color); font-weight: 600; }
-        .news-detail-content { font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); white-space: pre-line; }
+        /* 互動檢測按鈕區塊 */
+        .diag-container { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; }
+        .diag-btn { flex: 1 1 calc(50% - 15px); background: #fff; color: var(--text-main); border: 1px solid var(--border-color); text-align: left; justify-content: space-between; }
+        .diag-result { display: none; background: rgba(0,113,227,0.04); padding: 25px; border-radius: 20px; border-left: 4px solid var(--primary-color); }
+
+        /* ================= 現代化 Footer ================= */
+        .footer-modern { background: #111; color: #86868b; padding: 80px 20px 60px; text-align: center; position: relative; overflow: hidden; z-index: 2; border-top: 1px solid rgba(255,255,255,0.05);}
+        .footer-glow { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 80%; height: 200px; background: radial-gradient(ellipse at center, rgba(0, 113, 227, 0.25) 0%, transparent 70%); filter: blur(60px); pointer-events: none; z-index: -1; }
+        .footer-content { max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 35px; }
+        .footer-brand { font-size: 2.8rem; font-weight: 800; letter-spacing: -1px; background: linear-gradient(180deg, #ffffff 0%, #a0a0a5 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-info { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; }
+        .footer-item { display: flex; align-items: center; gap: 12px; font-size: 1.05rem; background: rgba(255, 255, 255, 0.05); padding: 16px 32px; border-radius: 100px; border: 1px solid rgba(255, 255, 255, 0.08); transition: var(--transition-spring); color: #e5e5ea; text-decoration: none;}
+        .footer-item:hover { background: rgba(255, 255, 255, 0.1); transform: translateY(-4px); border-color: rgba(255, 255, 255, 0.2); color: #fff;}
+        .footer-item i { color: var(--primary-color); font-size: 1.2rem; }
+        .footer-copyright { margin-top: 50px; font-size: 0.9rem; color: #666; font-family: var(--font-tech); }
 
         /* ================= 後台登入與 CMS 介面 ================= */
-        .admin-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
+        .admin-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(20px); z-index: 9999; justify-content: center; align-items: center; opacity: 0; transition: 0.3s; }
         .admin-overlay.show { opacity: 1; }
-        .admin-login-box { background: #1d1d1f; padding: 40px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 400px; text-align: center; color: #fff; transform: translateY(20px); transition: 0.4s; box-sizing: border-box;}
+        .admin-login-box { background: rgba(30, 30, 32, 0.8); padding: 40px; border-radius: 28px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 400px; text-align: center; color: #fff; transform: translateY(20px); transition: 0.4s; backdrop-filter: blur(40px); box-shadow: 0 20px 60px rgba(0,0,0,0.5);}
         .admin-overlay.show .admin-login-box { transform: translateY(0); }
-        .admin-login-box input { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: #fff; }
+        .admin-login-box input { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #fff; margin-bottom: 20px;}
+        .admin-login-box input:focus { border-color: var(--primary-color); background: rgba(255,255,255,0.12);}
         
         #admin-panel { display: none; position: fixed; inset: 0; background: #f5f5f7; z-index: 10000; overflow-y: auto; color: #1d1d1f; }
         .admin-header { background: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.05); flex-wrap: wrap; gap: 10px;}
-        .admin-layout { display: flex; max-width: 1400px; margin: 20px auto; gap: 20px; padding: 0 15px; flex-wrap: wrap; box-sizing: border-box;}
+        .admin-layout { display: flex; max-width: 1400px; margin: 20px auto; gap: 20px; padding: 0 15px; flex-wrap: wrap;}
         .admin-sidebar { width: 250px; display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;}
-        .admin-tab-btn { padding: 12px 15px; background: transparent; border: none; font-size: 1rem; font-weight: 700; text-align: left; border-radius: 10px; cursor: pointer; color: var(--text-secondary); transition: 0.3s; }
+        .admin-tab-btn { padding: 12px 15px; background: transparent; border: none; font-size: 1rem; font-weight: 700; text-align: left; border-radius: 12px; cursor: pointer; color: var(--text-secondary); transition: 0.3s; }
         .admin-tab-btn.active { background: var(--primary-color); color: #fff; }
-        .admin-content { flex: 1; min-width: 300px; background: #fff; border-radius: 20px; padding: 30px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); overflow-x: auto; box-sizing: border-box;}
+        .admin-content { flex: 1; min-width: 300px; background: #fff; border-radius: 20px; padding: 30px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); overflow-x: auto;}
         .admin-view { display: none; }
         .admin-view.active { display: block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -190,61 +195,58 @@
         th { background: #f5f5f7; color: #888; font-size: 0.9rem; font-weight: 700; }
 
         .menu-toggle { display: none; background: none; border: none; font-size: 1.8rem; color: var(--text-main); cursor: pointer; padding: 5px; margin: 0; }
-        .admin-settings-group { background: rgba(0,0,0,0.02); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color); }
-
+        
         /* ================= 📱 手機與平板響應式設計 (RWD) ================= */
         @media (max-width: 1024px) {
-            .about-title { font-size: 2.2rem; }
+            .about-title { font-size: 2.5rem; }
             .hero h1 { font-size: 3.5rem; }
             .grid-layout { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
         }
 
         @media (max-width: 768px) {
-            /* 導覽列優化 */
             .header { padding: 12px 20px; }
-            .controls { display: none; } /* 手機版隱藏右側按鈕，保持整潔 */
+            .controls { display: none; }
             .menu-toggle { display: block; }
             
-            /* 手機版選單 (重寫確保字體不空白) */
-            .nav { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: #ffffff; padding: 0; margin: 0; border-bottom: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-            .nav.show { display: block; }
-            .nav ul { flex-direction: column; width: 100%; padding: 0; margin: 0; }
-            .nav li.dropdown-container { width: 100%; border-bottom: 1px solid #f0f0f0; margin: 0; }
+            /* 行動版選單修復 */
+            .nav { display: none; width: 100%; position: absolute; top: 100%; left: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border-bottom: 1px solid var(--border-color); box-shadow: 0 15px 30px rgba(0,0,0,0.1); padding: 0;}
+            .nav.show { display: block; animation: slideDown 0.3s ease; }
+            @keyframes slideDown { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+            
+            .nav ul { flex-direction: column; gap: 0; padding: 10px 0;}
+            .nav li.dropdown-container { width: 100%; border-bottom: 1px solid rgba(0,0,0,0.03); }
             .nav li.dropdown-container:last-child { border-bottom: none; }
-            .nav a, .nav span { display: block; width: 100%; padding: 16px 25px; font-size: 1.1rem; color: #1d1d1f; box-sizing: border-box; }
-            .nav li span::after { float: right; margin-top: 5px; transition: transform 0.3s; }
+            .nav a, .nav span { padding: 18px 25px; font-size: 1.1rem; }
+            .nav li span::after { float: right; transition: transform 0.3s ease; font-size: 1rem; margin-top: 5px;}
             
-            /* 子選單 (Accordion 展開) */
-            .nav .dropdown { position: static; width: 100%; background: #fafafa; box-shadow: none; opacity: 1; visibility: visible; display: none; transform: none; padding: 0; border: none; border-radius: 0; min-width: 100%; }
-            .nav li.dropdown-container.active .dropdown { display: block; }
-            .nav li.dropdown-container.active span::after { transform: rotate(180deg); color: var(--primary-color); }
-            .nav .dropdown a { padding: 12px 25px 12px 45px; border-bottom: 1px solid #f0f0f0; color: #555; margin: 0; font-size: 1rem; border-radius: 0;}
-            .nav .dropdown a:last-child { border-bottom: none; }
-            .nav .dropdown a i { margin-right: 10px; color: var(--primary-color); opacity: 1; }
+            /* 行動版下拉選單穩定展開 */
+            .nav .dropdown { position: static; transform: none; box-shadow: none; opacity: 1; visibility: visible; display: none; background: rgba(0,0,0,0.02); margin: 0; padding: 0; border: none; border-radius: 0; min-width: 100%; backdrop-filter: none; -webkit-backdrop-filter: none;}
+            .nav li.dropdown-container.active .dropdown { display: block; animation: smoothReveal 0.3s ease forwards;}
+            @keyframes smoothReveal { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+            .nav li.dropdown-container.active span::after { transform: rotate(180deg); color: var(--primary-color);}
             
-            /* 區塊縮放與排版 */
+            .nav .dropdown a { padding: 14px 25px 14px 45px; font-size: 1rem; border-radius: 0; border-bottom: 1px solid rgba(0,0,0,0.03); margin: 0; transition: none;}
+            .nav .dropdown a:hover { transform: none; background: rgba(0,0,0,0.02); }
+            
             .hero { height: 80vh; }
             .hero h1 { font-size: 2.5rem; letter-spacing: -1px; }
             .hero p { font-size: 1.1rem; }
             .section { padding: 60px 20px; }
-            .section-title { font-size: 2rem; }
-            .news-wrapper { padding: 60px 20px; }
+            .section-title { font-size: 2.2rem; }
             
-            /* 排版單欄化 */
             .about-wrapper { flex-direction: column; gap: 30px;}
             .about-image { height: 300px; width: 100%;}
             .grid-layout { grid-template-columns: 1fr; }
             
-            /* 表單排版 */
-            .board-container { display: flex; flex-direction: column; gap: 30px; }
-            .board-form-section, .board-list-section { width: 100%; }
+            .diag-btn { flex: 1 1 100% !important; margin-bottom: 10px; }
             
-            /* 後台 RWD */
+            .footer-info { flex-direction: column; gap: 15px; width: 100%; }
+            .footer-item { width: 100%; justify-content: center; }
+
             .admin-header h2 { font-size: 1.2rem; }
             .admin-sidebar { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
             .admin-tab-btn { white-space: nowrap; flex: 1; text-align: center; }
             .admin-content { padding: 20px; }
-            .admin-settings-group input, .admin-settings-group textarea { font-size: 16px; /* 防止 iOS 縮放 */ }
         }
     </style>
 </head>
@@ -277,10 +279,10 @@
                 </li>
                 <li class="dropdown-container"><span>專業服務</span>
                     <div class="dropdown">
-                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-desktop"></i> 電腦客製化組裝</a>
-                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-tools"></i> 硬體故障排除</a>
-                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-code"></i> 軟體與系統開發</a>
-                        <a href="#" onclick="navigate('home', 'process')"><i class="fas fa-tasks"></i> 標準化服務流程</a>
+                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-desktop"></i> 極致客製化組裝</a>
+                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-tools"></i> 硬體深度檢修</a>
+                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-compact-disc"></i> 系統重灌與升級</a>
+                        <a href="#" onclick="navigate('home', 'services')"><i class="fas fa-server"></i> 資料救援與伺服器</a>
                     </div>
                 </li>
                 <li class="dropdown-container"><span>更多資訊</span>
@@ -317,7 +319,7 @@
         <section class="news-wrapper" id="news">
             <div class="news-container reveal">
                 <div class="news-header-flex">
-                    <h2 class="section-title">最新動態公告</h2>
+                    <h2 class="section-title gradient-text">最新動態公告</h2>
                     <a onclick="navigate('archive')" class="more-link">更多公告 More... <i class="fas fa-arrow-right"></i></a>
                 </div>
                 <div id="front-news-list">
@@ -330,7 +332,7 @@
             <div class="about-wrapper">
                 <div class="about-content reveal">
                     <span style="color:var(--primary-color); font-weight:700; font-family:var(--font-tech); text-transform:uppercase; letter-spacing:1px;">Decade of Excellence</span>
-                    <h2 class="about-title" id="cms-about-title" style="margin-top: 15px;">基隆在地深耕<br>Su. Studio 十年淬鍊</h2>
+                    <h2 class="about-title gradient-text" id="cms-about-title" style="margin-top: 15px;">基隆在地深耕<br>Su. Studio 十年淬鍊</h2>
                     <p class="about-p" id="cms-about-desc">載入中...</p>
                 </div>
                 <div class="about-image reveal" style="transition-delay: 0.2s;">
@@ -340,51 +342,66 @@
         </section>
 
         <section class="section section-center" id="services" style="background: #fff;">
-            <h2 class="section-title reveal">軟硬兼備・職人服務</h2>
+            <h2 class="section-title reveal gradient-text">軟硬兼備・職人服務</h2>
             <p class="section-subtitle reveal">不只修電腦，更為您打造完美的科技生態系。</p>
             <div class="grid-layout">
-                <div class="card-box reveal glow-hover">
+                <div class="card-box glass-panel reveal glow-hover">
                     <div class="card-icon"><i class="fas fa-desktop"></i></div>
                     <h3>極致客製化組裝</h3>
                     <p>依據預算與極致效能需求，嚴選零件，提供頂級整機組裝、完美走線與高階水冷方案建置。</p>
                 </div>
-                <div class="card-box reveal glow-hover" style="transition-delay: 0.1s;">
+                <div class="card-box glass-panel reveal glow-hover" style="transition-delay: 0.1s;">
+                    <div class="card-icon"><i class="fas fa-microchip"></i></div>
+                    <h3>硬體升級與優化</h3>
+                    <p>針對老舊電腦提供 SSD 與記憶體升級方案，搭配深度的系統優化，讓您的舊愛機煥然一新。</p>
+                </div>
+                <div class="card-box glass-panel reveal glow-hover" style="transition-delay: 0.2s;">
+                    <div class="card-icon"><i class="fas fa-compact-disc"></i></div>
+                    <h3>系統重灌與軟體安裝</h3>
+                    <p>提供純淨版 Windows/macOS 系統重灌、硬體驅動程式完善配置，以及常用必備應用軟體安裝。</p>
+                </div>
+                <div class="card-box glass-panel reveal glow-hover" style="transition-delay: 0.3s;">
                     <div class="card-icon"><i class="fas fa-tools"></i></div>
                     <h3>硬體深度檢修</h3>
                     <p>針對不開機、藍白畫面提供精準交叉測試。我們用科學數據找出核心問題並進行無損修復。</p>
                 </div>
-                <div class="card-box reveal glow-hover" style="transition-delay: 0.2s;">
-                    <div class="card-icon"><i class="fas fa-code"></i></div>
-                    <h3>系統與軟體開發</h3>
-                    <p>專注於現代化 Web App 開發。代表作「Su.線上點餐系統」，結合高效能資料庫與即時推播，助力店家數位轉型。</p>
+                <div class="card-box glass-panel reveal glow-hover" style="transition-delay: 0.4s;">
+                    <div class="card-icon"><i class="fas fa-database"></i></div>
+                    <h3>高階資料救援</h3>
+                    <p>硬碟壞軌、誤刪檔案、隨身碟讀不到？我們透過專業軟硬體設備，為您盡力搶救珍貴的心血資料。</p>
+                </div>
+                <div class="card-box glass-panel reveal glow-hover" style="transition-delay: 0.5s;">
+                    <div class="card-icon"><i class="fas fa-server"></i></div>
+                    <h3>企業級伺服器建置</h3>
+                    <p>專為中小企業打造高穩定性 NAS 雲端儲存、權限控管、網路架構規劃與自動化備份解決方案。</p>
                 </div>
             </div>
         </section>
 
         <section class="section section-center" id="process">
-            <h2 class="section-title reveal">標準化服務流程</h2>
+            <h2 class="section-title reveal gradient-text">標準化服務流程</h2>
             <p class="section-subtitle reveal">透明、安心、專業。每一個步驟都為您嚴格把關。</p>
             <div class="grid-layout" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
-                <div class="card-box reveal glow-hover" style="position:relative; overflow:hidden;">
-                    <div style="font-family: var(--font-tech); font-size: 4rem; font-weight: 800; color: rgba(0,113,227,0.05); position: absolute; top: -10px; right: 10px; line-height: 1;">01</div>
+                <div class="card-box glass-panel reveal glow-hover" style="position:relative; overflow:hidden;">
+                    <div style="font-family: var(--font-tech); font-size: 5rem; font-weight: 800; color: rgba(0,113,227,0.04); position: absolute; top: -15px; right: 10px; line-height: 1;">01</div>
                     <div class="card-icon"><i class="fas fa-comments"></i></div>
                     <h3>線上諮詢與報修</h3>
                     <p>透過 LINE 或官網留言板描述您的狀況，由專人初步評估並安排檢測時間。</p>
                 </div>
-                <div class="card-box reveal glow-hover" style="position:relative; overflow:hidden; transition-delay: 0.1s;">
-                    <div style="font-family: var(--font-tech); font-size: 4rem; font-weight: 800; color: rgba(0,113,227,0.05); position: absolute; top: -10px; right: 10px; line-height: 1;">02</div>
+                <div class="card-box glass-panel reveal glow-hover" style="position:relative; overflow:hidden; transition-delay: 0.1s;">
+                    <div style="font-family: var(--font-tech); font-size: 5rem; font-weight: 800; color: rgba(0,113,227,0.04); position: absolute; top: -15px; right: 10px; line-height: 1;">02</div>
                     <div class="card-icon"><i class="fas fa-microscope"></i></div>
                     <h3>精密儀器檢測</h3>
                     <p>收件後進行硬體交叉測試與軟體除錯，精準找出故障核心，絕不亂換零件。</p>
                 </div>
-                <div class="card-box reveal glow-hover" style="position:relative; overflow:hidden; transition-delay: 0.2s;">
-                    <div style="font-family: var(--font-tech); font-size: 4rem; font-weight: 800; color: rgba(0,113,227,0.05); position: absolute; top: -10px; right: 10px; line-height: 1;">03</div>
+                <div class="card-box glass-panel reveal glow-hover" style="position:relative; overflow:hidden; transition-delay: 0.2s;">
+                    <div style="font-family: var(--font-tech); font-size: 5rem; font-weight: 800; color: rgba(0,113,227,0.04); position: absolute; top: -15px; right: 10px; line-height: 1;">03</div>
                     <div class="card-icon"><i class="fas fa-file-invoice-dollar"></i></div>
                     <h3>透明報價確認</h3>
                     <p>提供詳細的檢測結果與維修報價。經您同意後才會開始進行實質維修動作。</p>
                 </div>
-                <div class="card-box reveal glow-hover" style="position:relative; overflow:hidden; transition-delay: 0.3s;">
-                    <div style="font-family: var(--font-tech); font-size: 4rem; font-weight: 800; color: rgba(0,113,227,0.05); position: absolute; top: -10px; right: 10px; line-height: 1;">04</div>
+                <div class="card-box glass-panel reveal glow-hover" style="position:relative; overflow:hidden; transition-delay: 0.3s;">
+                    <div style="font-family: var(--font-tech); font-size: 5rem; font-weight: 800; color: rgba(0,113,227,0.04); position: absolute; top: -15px; right: 10px; line-height: 1;">04</div>
                     <div class="card-icon"><i class="fas fa-check-circle"></i></div>
                     <h3>壓力測試與交付</h3>
                     <p>完修後進行 12-24 小時燒機壓力測試，確保系統穩定後，安心交件並提供保固。</p>
@@ -393,55 +410,56 @@
         </section>
 
         <section class="section section-center" id="diagnostics" style="background: #fff;">
-            <h2 class="section-title reveal">互動式故障排除指南</h2>
+            <h2 class="section-title reveal gradient-text">互動式故障排除指南</h2>
             <p class="section-subtitle reveal">電腦出怪手？點選您遇到的狀況，系統將提供初步診斷方向。</p>
-            <div class="reveal glow-hover" style="max-width: 1000px; margin: 0 auto; background: var(--card-bg); padding: 40px; border-radius: var(--border-radius-main); border: 1px solid var(--border-light); box-shadow: var(--shadow-subtle); text-align: left; box-sizing: border-box;">
-                <h3 style="font-size: 1.3rem; margin-bottom: 20px; font-weight: 700;"><i class="fas fa-stethoscope mr-2" style="color: var(--primary-color);"></i> 請問您目前遇到什麼問題？</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 30px;">
-                    <button class="btn-primary-tech" style="flex: 1 1 calc(50% - 15px); background: #fff; color: var(--text-main); border: 1px solid var(--border-color); text-align: left; justify-content: space-between;" onclick="showDiagResult('power')"><span>1. 按下電源鍵完全沒反應</span><i class="fas fa-chevron-right"></i></button>
-                    <button class="btn-primary-tech" style="flex: 1 1 calc(50% - 15px); background: #fff; color: var(--text-main); border: 1px solid var(--border-color); text-align: left; justify-content: space-between;" onclick="showDiagResult('blue')"><span>2. 出現藍底白字 (BSOD)</span><i class="fas fa-chevron-right"></i></button>
-                    <button class="btn-primary-tech" style="flex: 1 1 calc(50% - 15px); background: #fff; color: var(--text-main); border: 1px solid var(--border-color); text-align: left; justify-content: space-between;" onclick="showDiagResult('slow')"><span>3. 使用起來非常卡頓</span><i class="fas fa-chevron-right"></i></button>
-                    <button class="btn-primary-tech" style="flex: 1 1 calc(50% - 15px); background: #fff; color: var(--text-main); border: 1px solid var(--border-color); text-align: left; justify-content: space-between;" onclick="showDiagResult('noise')"><span>4. 風扇異常大聲或有異音</span><i class="fas fa-chevron-right"></i></button>
+            <div class="reveal glow-hover glass-panel" style="max-width: 1000px; margin: 0 auto; padding: 40px; border-radius: var(--border-radius-main); text-align: left;">
+                <h3 style="font-size: 1.3rem; margin-bottom: 25px; font-weight: 700; color: var(--text-main);"><i class="fas fa-stethoscope mr-2" style="color: var(--primary-color);"></i> 請問您目前遇到什麼問題？</h3>
+                
+                <div class="diag-container">
+                    <button class="btn-primary-tech diag-btn" onclick="showDiagResult('power')"><span>1. 按下電源鍵完全沒反應</span><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn-primary-tech diag-btn" onclick="showDiagResult('blue')"><span>2. 出現藍底白字 (BSOD)</span><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn-primary-tech diag-btn" onclick="showDiagResult('slow')"><span>3. 使用起來非常卡頓</span><i class="fas fa-chevron-right"></i></button>
+                    <button class="btn-primary-tech diag-btn" onclick="showDiagResult('noise')"><span>4. 風扇異常大聲或有異音</span><i class="fas fa-chevron-right"></i></button>
                 </div>
                 
-                <div id="diag-power" style="display:none; background: rgba(0,113,227,0.05); padding: 25px; border-radius: 16px; border-left: 4px solid var(--primary-color);">
-                    <h4 style="font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：電源供應器或主機板異常</h4>
+                <div id="diag-power" class="diag-result">
+                    <h4 style="font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：電源供應器或主機板異常</h4>
                     <p style="color: var(--text-secondary);">請先確認延長線開關是否有打開，以及主機背後的電源供應器開關是否在「I」的位置。若皆正常，高機率為電源損壞或主機板短路。建議直接填寫下方報修單。</p>
                 </div>
-                <div id="diag-blue" style="display:none; background: rgba(0,113,227,0.05); padding: 25px; border-radius: 16px; border-left: 4px solid var(--primary-color);">
-                    <h4 style="font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：記憶體或系統檔案損毀</h4>
+                <div id="diag-blue" class="diag-result">
+                    <h4 style="font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：記憶體或系統檔案損毀</h4>
                     <p style="color: var(--text-secondary);">通常伴隨一串錯誤碼。可能是記憶體金手指氧化或是 Windows 更新衝突。可嘗試拔除記憶體用橡皮擦清潔。若無效請聯繫我們。</p>
                 </div>
-                <div id="diag-slow" style="display:none; background: rgba(0,113,227,0.05); padding: 25px; border-radius: 16px; border-left: 4px solid var(--primary-color);">
-                    <h4 style="font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：硬碟老化或溫度過高降頻</h4>
+                <div id="diag-slow" class="diag-result">
+                    <h4 style="font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：硬碟老化或溫度過高降頻</h4>
                     <p style="color: var(--text-secondary);">若系統碟仍是傳統機械硬碟 (HDD)，強烈建議升級為 SSD。若是近期突然變慢，可能是內部積灰塵導致散熱不良，CPU 自動降頻保護。</p>
                 </div>
-                <div id="diag-noise" style="display:none; background: rgba(0,113,227,0.05); padding: 25px; border-radius: 16px; border-left: 4px solid var(--primary-color);">
-                    <h4 style="font-weight: 700; font-size: 1.1rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：散熱系統極需保養</h4>
+                <div id="diag-noise" class="diag-result">
+                    <h4 style="font-weight: 700; font-size: 1.15rem; color: var(--text-main); margin-bottom: 10px;">初步診斷：散熱系統極需保養</h4>
                     <p style="color: var(--text-secondary);">風扇狂轉代表溫度過高，通常是因為散熱膏乾涸或內部被灰塵堵死。長時間高溫會大幅縮減晶片壽命，建議盡快預約深度內部清潔與保養。</p>
                 </div>
             </div>
         </section>
 
         <section class="section section-center" id="portfolio">
-            <h2 class="section-title reveal">專案與工藝展示</h2>
+            <h2 class="section-title reveal gradient-text">專案與工藝展示</h2>
             <p class="section-subtitle reveal">真實案例，展現 Su. Studio 的職人精神與對品質的堅持。</p>
             <div class="grid-layout">
-                <div class="card-box reveal glow-hover" style="padding:0; overflow:hidden;">
+                <div class="card-box glass-panel reveal glow-hover" style="padding:0; overflow:hidden;">
                     <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
                     <div style="padding: 25px;">
                         <h3 style="margin-bottom: 5px;">旗艦電競主機組裝</h3>
                         <p style="color:var(--primary-color); font-family:var(--font-tech); font-size:0.85rem; font-weight:700;">Custom Cable Management</p>
                     </div>
                 </div>
-                <div class="card-box reveal glow-hover" style="padding:0; overflow:hidden; transition-delay: 0.1s;">
-                    <img src="https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
+                <div class="card-box glass-panel reveal glow-hover" style="padding:0; overflow:hidden; transition-delay: 0.1s;">
+                    <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
                     <div style="padding: 25px;">
-                        <h3 style="margin-bottom: 5px;">Su.線上點餐系統</h3>
-                        <p style="color:var(--primary-color); font-family:var(--font-tech); font-size:0.85rem; font-weight:700;">Web App / Firebase</p>
+                        <h3 style="margin-bottom: 5px;">企業級 NAS 伺服器建置</h3>
+                        <p style="color:var(--primary-color); font-family:var(--font-tech); font-size:0.85rem; font-weight:700;">Enterprise Server & Storage</p>
                     </div>
                 </div>
-                <div class="card-box reveal glow-hover" style="padding:0; overflow:hidden; transition-delay: 0.2s;">
+                <div class="card-box glass-panel reveal glow-hover" style="padding:0; overflow:hidden; transition-delay: 0.2s;">
                     <img src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=800&auto=format&fit=crop" style="width:100%; height:250px; object-fit:cover;">
                     <div style="padding: 25px;">
                         <h3 style="margin-bottom: 5px;">主機板精密級維修</h3>
@@ -452,102 +470,87 @@
         </section>
 
         <section class="section section-center" id="reviews" style="background: #fff;">
-            <h2 class="section-title reveal">客戶真實評價</h2>
+            <h2 class="section-title reveal gradient-text">客戶真實評價</h2>
             <p class="section-subtitle reveal">您的滿意，是我們堅持品質的最大動力。</p>
             <div class="grid-layout">
-                <div class="card-box reveal glow-hover" style="text-align: left;">
+                <div class="card-box glass-panel reveal glow-hover" style="text-align: left;">
                     <div style="color: #FFD700; margin-bottom: 15px; font-size: 1.1rem; letter-spacing: 2px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p style="font-size: 1rem; color: var(--text-main); font-weight: 500; line-height: 1.6; margin-bottom: 20px; font-style: italic;">「原本以為筆電進水沒救了，資料都沒備份。交給他們檢測後三天完修，不但電腦救回來，資料也完整無缺！技術真的沒話說！」</p>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 45px; height: 45px; background: var(--primary-color); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem;">林</div>
-                        <div><h4 style="font-size: 1rem; font-weight: 700; margin:0;">林小姐</h4><span style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-tech);">ASUS 筆電維修</span></div>
+                    <p style="font-size: 1.05rem; color: var(--text-main); font-weight: 500; line-height: 1.6; margin-bottom: 25px; font-style: italic;">「原本以為筆電進水沒救了，資料都沒備份。交給他們檢測後三天完修，不但電腦救回來，資料也完整無缺！技術真的沒話說！」</p>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-top: auto;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,113,227,0.3);">林</div>
+                        <div><h4 style="font-size: 1rem; font-weight: 700; margin:0;">林小姐</h4><span style="font-size: 0.85rem; color: var(--text-secondary); font-family: var(--font-tech);">ASUS 筆電維修</span></div>
                     </div>
                 </div>
-                <div class="card-box reveal glow-hover" style="text-align: left; transition-delay: 0.1s;">
+                <div class="card-box glass-panel reveal glow-hover" style="text-align: left; transition-delay: 0.1s;">
                     <div style="color: #FFD700; margin-bottom: 15px; font-size: 1.1rem; letter-spacing: 2px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p style="font-size: 1rem; color: var(--text-main); font-weight: 500; line-height: 1.6; margin-bottom: 20px; font-style: italic;">「店裡原本用紙本畫單常出錯。後來請 Su 開發線上點餐系統，掃 QR Code 就能點餐，後台清晰還有推播通知，極大提升效率！」</p>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 45px; height: 45px; background: var(--primary-color); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem;">王</div>
-                        <div><h4 style="font-size: 1rem; font-weight: 700; margin:0;">王店長</h4><span style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-tech);">系統開發</span></div>
+                    <p style="font-size: 1.05rem; color: var(--text-main); font-weight: 500; line-height: 1.6; margin-bottom: 25px; font-style: italic;">「工作室原本資料散落各處，請 Su 協助建置企業級 NAS 伺服器並規劃自動備份後，再也不怕硬碟損壞，效率大幅提升！」</p>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-top: auto;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,113,227,0.3);">王</div>
+                        <div><h4 style="font-size: 1rem; font-weight: 700; margin:0;">王店長</h4><span style="font-size: 0.85rem; color: var(--text-secondary); font-family: var(--font-tech);">伺服器與備份建置</span></div>
                     </div>
                 </div>
-                <div class="card-box reveal glow-hover" style="text-align: left; transition-delay: 0.2s;">
+                <div class="card-box glass-panel reveal glow-hover" style="text-align: left; transition-delay: 0.2s;">
                     <div style="color: #FFD700; margin-bottom: 15px; font-size: 1.1rem; letter-spacing: 2px;"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p style="font-size: 1rem; color: var(--text-main); font-weight: 500; line-height: 1.6; margin-bottom: 20px; font-style: italic;">「這次請他們組裝高階水冷機。走線極致完美，完全看不到雜亂的線材。交機前還燒機測試了一整天，讓人非常放心，大推！」</p>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <div style="width: 45px; height: 45px; background: var(--primary-color); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem;">陳</div>
-                        <div><h4 style="font-size: 1rem; font-weight: 700; margin:0;">陳先生</h4><span style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-tech);">高階水冷組裝</span></div>
+                    <p style="font-size: 1.05rem; color: var(--text-main); font-weight: 500; line-height: 1.6; margin-bottom: 25px; font-style: italic;">「這次請他們組裝高階水冷機。走線極致完美，完全看不到雜亂的線材。交機前還燒機測試了一整天，讓人非常放心，大推！」</p>
+                    <div style="display: flex; align-items: center; gap: 15px; margin-top: auto;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: 700; font-size: 1.2rem; box-shadow: 0 4px 10px rgba(0,113,227,0.3);">陳</div>
+                        <div><h4 style="font-size: 1rem; font-weight: 700; margin:0;">陳先生</h4><span style="font-size: 0.85rem; color: var(--text-secondary); font-family: var(--font-tech);">高階水冷組裝</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="section section-center" id="faq">
-            <h2 class="section-title reveal">常見問題解答 (FAQ)</h2>
-            <p class="section-subtitle reveal">針對維修、組裝與軟體開發的常見疑問，為您一次解答。</p>
-            <div class="reveal" style="max-width: 800px; margin: 0 auto; text-align: left;">
-                <div class="glow-hover" style="background: #fff; border-radius: 16px; margin-bottom: 15px; padding: 25px;">
-                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">1. 電腦檢測需要收費嗎？</h4>
-                    <p style="color: var(--text-secondary);">若檢測後決定由我們進行維修，將免收檢測費，僅收取維修費用。若檢測後因故不維修，將依據檢測難度酌收 NT$ 300 - 500 基本檢測工資。</p>
-                </div>
-                <div class="glow-hover" style="background: #fff; border-radius: 16px; margin-bottom: 15px; padding: 25px;">
-                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">2. 客製化組裝電腦有保固嗎？</h4>
-                    <p style="color: var(--text-secondary);">有的。除了零件原廠提供的保固外，Su. Studio 額外提供第一年「整機免費代送修與軟體諮詢服務」。硬體有問題交給我們處理到好。</p>
-                </div>
-                <div class="glow-hover" style="background: #fff; border-radius: 16px; margin-bottom: 15px; padding: 25px;">
-                    <h4 style="font-size: 1.1rem; font-weight: 700; color: var(--primary-color); margin-bottom: 10px;">3. Su.線上點餐系統可以客製化嗎？</h4>
-                    <p style="color: var(--text-secondary);">完全可以。我們採用現代化 Web App 與 Firebase 雲端架構開發。能依據您店鋪的實際營業需求進行深度的客製化開發。</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="section section-center" id="board" style="background: #fff;">
-            <h2 class="section-title reveal">線上報修留言板</h2>
-            <p class="section-subtitle reveal">遇到電腦問題？立即留下您的狀況，系統將同步至雲端，技師將快速為您評估。</p>
+        <section class="section section-center" id="board" style="background: var(--bg-color);">
+            <h2 class="section-title reveal gradient-text">線上報修留言板</h2>
+            <p class="section-subtitle reveal">遇到電腦問題？立即留下您的狀況，系統將以加密形式同步至雲端，技師將快速為您評估。</p>
             
-            <div class="board-container reveal" style="max-width: 1000px; margin: 0 auto;">
-                <div class="board-form-section glow-hover" style="background: var(--card-bg); padding: 40px; border-radius: var(--border-radius-main); box-shadow: var(--shadow-subtle); border: 1px solid var(--border-light); text-align: left; box-sizing: border-box;">
-                    <h3 style="margin-bottom: 25px; font-size: 1.5rem;"><i class="fas fa-edit" style="color:var(--primary-color); margin-right:8px;"></i> 建立報修工單</h3>
+            <div style="max-width: 700px; margin: 0 auto;" class="reveal">
+                <div class="glass-panel glow-hover" style="padding: 40px; border-radius: var(--border-radius-main); text-align: left;">
+                    <h3 style="margin-bottom: 30px; font-size: 1.6rem; color: var(--text-main); font-weight: 800;"><i class="fas fa-paper-plane" style="color:var(--primary-color); margin-right:8px;"></i> 建立快速工單</h3>
                     <form id="repairForm">
                         <div class="form-group">
-                            <label>稱呼 (Name) <span style="color:red">*</span></label>
+                            <label>稱呼 (Name) <span style="color:#ff3b30">*</span></label>
                             <input type="text" id="ticketName" class="form-control" placeholder="例如：王先生" required>
                         </div>
                         <div class="form-group">
-                            <label>聯絡電話 (Phone) <span style="color:red">*</span></label>
+                            <label>聯絡電話 (Phone) <span style="color:#ff3b30">*</span></label>
                             <input type="tel" id="ticketPhone" class="form-control" placeholder="例如：0912345678" required>
                         </div>
                         <div class="form-group">
-                            <label>故障描述 (Issue) <span style="color:red">*</span></label>
-                            <textarea id="ticketIssue" class="form-control" placeholder="請描述您遇到的問題..." required></textarea>
+                            <label>故障描述 (Issue) <span style="color:#ff3b30">*</span></label>
+                            <textarea id="ticketIssue" class="form-control" placeholder="請詳細描述您遇到的狀況..." required></textarea>
                         </div>
-                        <button type="submit" id="submitBtn" class="btn-primary-tech" style="width: 100%;">
-                            <i class="fas fa-paper-plane"></i> 送出加密工單
+                        <button type="submit" id="submitBtn" class="btn-primary-tech" style="width: 100%; padding: 16px; font-size: 1.1rem; border-radius: 16px;">
+                            <i class="fas fa-lock"></i> 安全送出工單
                         </button>
                     </form>
-                </div>
-                
-                <div class="board-list-section" style="text-align: left; box-sizing: border-box;">
-                    <div id="messageList" style="display: flex; flex-direction: column; gap: 15px; max-height: 550px; overflow-y: auto; padding-right: 10px;">
-                        <div style="text-align:center; color:#888; padding: 40px;"><i class="fas fa-spinner fa-spin"></i> 載入系統紀錄中...</div>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <footer style="background: #000; color: #86868b; padding: 80px 20px; text-align: center; font-size: 0.95rem; position: relative; z-index: 2;" id="contact">
-            <div style="margin-bottom: 25px; font-size: 2.2rem; color: #fff; font-weight: 800; letter-spacing: -1px;">Su. Studio</div>
-            <p style="margin-bottom: 15px; font-size: 1.1rem;">
-                <i class="fab fa-line" style="color:var(--primary-color);"></i> LINE 諮詢：<a id="cms-contact-line-link" href="#" target="_blank" style="color:#fff; text-decoration:none; font-weight:700;"><span id="cms-contact-line">...</span></a> 
-            </p>
-            <p style="margin-bottom: 15px; font-size: 1.1rem;">
-                <i class="fas fa-phone-alt" style="color:var(--primary-color);"></i> 服務專線：<span id="cms-contact-phone" style="color:#fff; font-weight:700;">...</span>
-            </p>
-            <p style="margin-bottom: 15px; font-size: 1.1rem;">
-                <i class="fas fa-map-marker-alt" style="color:var(--primary-color);"></i> 工作室位置：<span id="cms-contact-address" style="color:#e5e5ea;">...</span>
-            </p>
-            <div style="margin-top: 50px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-                Copyright <span id="adminTrigger" style="cursor:pointer; user-select:none; padding:10px; font-weight:bold; font-size:1.1rem;" title="DoubleClick for Admin">©</span> 2026 Su. Studio Tech Solutions. All rights reserved.
+        <footer class="footer-modern" id="contact">
+            <div class="footer-glow"></div>
+            <div class="footer-content">
+                <div class="footer-brand">Su. Studio</div>
+                
+                <div class="footer-info">
+                    <a id="cms-contact-line-link" href="#" target="_blank" class="footer-item">
+                        <i class="fab fa-line"></i>
+                        <span>LINE ID: <strong id="cms-contact-line" style="color:#fff; font-family:var(--font-tech);">...</strong></span>
+                    </a>
+                    <a id="cms-contact-phone-link" href="#" class="footer-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>專線: <strong id="cms-contact-phone" style="color:#fff; font-family:var(--font-tech);">...</strong></span>
+                    </a>
+                    <a id="cms-contact-address-link" href="#" target="_blank" class="footer-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="cms-contact-address">...</span>
+                    </a>
+                </div>
+
+                <div class="footer-copyright">
+                    Copyright <span id="adminTrigger" style="cursor:pointer; user-select:none; padding:10px; font-weight:bold; font-size:1.1rem; color:var(--primary-color);" title="Admin Auth">©</span> 2026 Su. Studio Tech Solutions. All rights reserved.
+                </div>
             </div>
         </footer>
     </div>
@@ -556,24 +559,23 @@
         <div class="breadcrumb">
             <a onclick="navigate('home')">首頁</a> > <span>所有歷史公告</span>
         </div>
-        <h2 class="section-title">所有歷史公告</h2>
-        <div id="archive-news-list">
-            </div>
+        <h2 class="section-title gradient-text">所有歷史公告</h2>
+        <div id="archive-news-list"></div>
     </div>
 
     <div id="view-detail" class="spa-view">
         <div class="breadcrumb">
             <a onclick="navigate('home')">首頁</a> > <a onclick="navigate('archive')">最新公告</a> > <span id="detail-breadcrumb">公告詳情</span>
         </div>
-        <div style="background: #fff; padding: 40px; border-radius: 24px; box-shadow: var(--shadow-subtle); border: 1px solid var(--border-color); box-sizing: border-box;">
-            <div class="news-detail-header">
-                <h1 class="news-detail-title" id="detail-title">載入中...</h1>
-                <div class="news-detail-date"><i class="far fa-calendar-alt"></i> 發布日期：<span id="detail-date">--</span></div>
+        <div class="glass-panel" style="padding: 40px; border-radius: 24px;">
+            <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--text-main); margin-bottom: 10px; line-height: 1.3;" id="detail-title">載入中...</h1>
+                <div style="font-family: var(--font-tech); color: var(--primary-color); font-weight: 600;"><i class="far fa-calendar-alt"></i> 發布日期：<span id="detail-date">--</span></div>
             </div>
-            <div class="news-detail-content" id="detail-content"></div>
+            <div style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); white-space: pre-line;" id="detail-content"></div>
             
             <div style="margin-top: 50px; text-align: center;">
-                <button onclick="navigate('archive')" class="btn-primary-tech" style="background: var(--bg-color); color: var(--text-main); box-shadow: none; border: 1px solid var(--border-color);"><i class="fas fa-undo"></i> 返回公告列表</button>
+                <button onclick="navigate('archive')" class="btn-primary-tech" style="background: rgba(0,0,0,0.05); color: var(--text-main); box-shadow: none;"><i class="fas fa-undo"></i> 返回列表</button>
             </div>
         </div>
     </div>
@@ -582,11 +584,11 @@
 
     <div class="admin-overlay" id="loginModal">
         <div class="admin-login-box">
-            <h2 style="font-family: var(--font-tech); margin-bottom: 20px; color: var(--primary-color);">SysAdmin Auth</h2>
-            <p style="font-size: 0.85rem; color: #888; margin-bottom: 25px;">請輸入高權限管理者憑證</p>
+            <h2 style="font-family: var(--font-tech); margin-bottom: 10px; color: var(--primary-color);"><i class="fas fa-shield-alt"></i> SYS_AUTH</h2>
+            <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 30px;">高強度安全加密終端</p>
             <input type="text" id="loginUser" class="form-control" placeholder="Admin ID">
-            <input type="password" id="loginPass" class="form-control" placeholder="Password">
-            <button onclick="attemptLogin()" class="btn-primary-tech" style="width: 100%; justify-content: center; margin-bottom: 10px;">AUTHENTICATE</button>
+            <input type="password" id="loginPass" class="form-control" placeholder="Secure Password">
+            <button onclick="attemptLogin()" class="btn-primary-tech" style="width: 100%; justify-content: center; margin-bottom: 15px; border-radius: 12px; font-size: 1.05rem;">AUTHENTICATE</button>
             <button onclick="closeLogin()" style="width: 100%; background:transparent; border:none; color:#888; cursor:pointer; padding:10px; font-weight:600;">CANCEL</button>
         </div>
     </div>
@@ -603,20 +605,11 @@
                 <button class="admin-tab-btn" onclick="switchAdminTab('settings')"><i class="fas fa-sliders-h"></i> 首頁版面設定</button>
             </div>
             <div class="admin-content">
-                
                 <div id="admin-view-tickets" class="admin-view active">
                     <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">客戶報修清單</h3>
                     <div style="overflow-x: auto;">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th>時間</th>
-                                    <th>稱呼</th>
-                                    <th>電話</th>
-                                    <th>故障描述</th>
-                                    <th>操作</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>時間</th><th>稱呼</th><th>電話</th><th>故障描述</th><th>操作</th></tr></thead>
                             <tbody id="adminTicketList"></tbody>
                         </table>
                     </div>
@@ -624,77 +617,70 @@
 
                 <div id="admin-view-news" class="admin-view">
                     <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">發布最新公告</h3>
-                    <div style="background: var(--bg-color); padding: 25px; border-radius: 16px; margin-bottom: 30px; box-sizing: border-box;">
-                        <input type="text" id="newNewsTitle" class="form-control" placeholder="輸入公告標題 (必填)">
-                        <textarea id="newNewsContent" class="form-control" style="min-height: 120px;" placeholder="輸入公告詳細內容 (必填，支援換行)"></textarea>
+                    <div style="background: var(--bg-color); padding: 25px; border-radius: 16px; margin-bottom: 30px;">
+                        <input type="text" id="newNewsTitle" class="form-control" placeholder="輸入公告標題 (必填)" style="margin-bottom:15px;">
+                        <textarea id="newNewsContent" class="form-control" style="min-height: 120px; margin-bottom:15px;" placeholder="輸入公告詳細內容 (必填，支援換行)"></textarea>
                         <button onclick="addNews()" class="btn-primary-tech"><i class="fas fa-plus"></i> 新增發布公告</button>
                     </div>
                     <div style="overflow-x: auto;">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th style="width:100px;">發布日期</th>
-                                    <th>公告標題</th>
-                                    <th style="width:80px;">操作</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th style="width:100px;">發布日期</th><th>公告標題</th><th style="width:80px;">操作</th></tr></thead>
                             <tbody id="adminNewsList"></tbody>
                         </table>
                     </div>
                 </div>
 
                 <div id="admin-view-settings" class="admin-view">
-                    <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">全域視覺與幻燈片設定</h3>
+                    <h3 style="font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px;">全域視覺與設定</h3>
                     <div style="max-width: 800px;">
-                        
-                        <div class="admin-settings-group">
+                        <div style="background: rgba(0,0,0,0.02); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color);">
                             <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-paint-brush"></i> 視覺設定</h4>
                             <label style="display:block; font-weight:700; margin-bottom:8px;">全站主體品牌色</label>
-                            <input type="color" id="cmsColor" class="form-control" style="height: 50px; padding: 5px; cursor:pointer;">
+                            <input type="color" id="cmsColor" class="form-control" style="height: 50px; padding: 5px; cursor:pointer; margin-bottom:15px;">
                             <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:#fff; padding:15px; border-radius:12px; border:1px solid #ddd;">
                                 <input type="checkbox" id="cmsShowGrid" style="width:20px; height:20px;">
                                 <span style="font-weight:600;">開啟未來感科技網格背景</span>
                             </label>
                         </div>
 
-                        <div class="admin-settings-group">
-                            <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-images"></i> 首頁動態幻燈片管理 (最多3張)</h4>
-                            <div style="background:#fff; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #ddd; box-sizing: border-box;">
+                        <div style="background: rgba(0,0,0,0.02); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color);">
+                            <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-images"></i> 首頁動態幻燈片管理</h4>
+                            <div style="background:#fff; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #ddd;">
                                 <h5 style="margin-bottom:10px;">幻燈片 1 (必要)</h5>
                                 <input type="text" id="cmsS1Img" class="form-control" placeholder="背景圖片網址" style="margin-bottom:10px;">
                                 <input type="text" id="cmsS1Title" class="form-control" placeholder="大標題" style="margin-bottom:10px;">
                                 <input type="text" id="cmsS1Desc" class="form-control" placeholder="副標題" style="margin-bottom:0;">
                             </div>
-                            <div style="background:#fff; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #ddd; box-sizing: border-box;">
-                                <h5 style="margin-bottom:10px;">幻燈片 2 (留空則不顯示)</h5>
+                            <div style="background:#fff; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #ddd;">
+                                <h5 style="margin-bottom:10px;">幻燈片 2</h5>
                                 <input type="text" id="cmsS2Img" class="form-control" placeholder="背景圖片網址" style="margin-bottom:10px;">
                                 <input type="text" id="cmsS2Title" class="form-control" placeholder="大標題" style="margin-bottom:10px;">
                                 <input type="text" id="cmsS2Desc" class="form-control" placeholder="副標題" style="margin-bottom:0;">
                             </div>
-                            <div style="background:#fff; padding:15px; border-radius:12px; margin-bottom:15px; border:1px solid #ddd; box-sizing: border-box;">
-                                <h5 style="margin-bottom:10px;">幻燈片 3 (留空則不顯示)</h5>
+                            <div style="background:#fff; padding:15px; border-radius:12px; border:1px solid #ddd;">
+                                <h5 style="margin-bottom:10px;">幻燈片 3</h5>
                                 <input type="text" id="cmsS3Img" class="form-control" placeholder="背景圖片網址" style="margin-bottom:10px;">
                                 <input type="text" id="cmsS3Title" class="form-control" placeholder="大標題" style="margin-bottom:10px;">
                                 <input type="text" id="cmsS3Desc" class="form-control" placeholder="副標題" style="margin-bottom:0;">
                             </div>
                         </div>
 
-                        <div class="admin-settings-group">
+                        <div style="background: rgba(0,0,0,0.02); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color);">
                             <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-info-circle"></i> 關於我們區塊</h4>
                             <label style="display:block; font-weight:700; margin-bottom:8px;">大標題</label>
-                            <textarea id="cmsAboutTitle" class="form-control" style="min-height:80px;"></textarea>
+                            <textarea id="cmsAboutTitle" class="form-control" style="min-height:80px; margin-bottom:15px;"></textarea>
                             <label style="display:block; font-weight:700; margin-bottom:8px;">介紹內文</label>
-                            <textarea id="cmsAboutDesc" class="form-control" style="min-height:120px;"></textarea>
+                            <textarea id="cmsAboutDesc" class="form-control" style="min-height:120px; margin-bottom:15px;"></textarea>
                             <label style="display:block; font-weight:700; margin-bottom:8px;">圖片網址</label>
                             <input type="text" id="cmsAboutImg" class="form-control" placeholder="https://...">
                         </div>
 
-                        <div class="admin-settings-group">
+                        <div style="background: rgba(0,0,0,0.02); padding: 20px; border-radius: 16px; margin-bottom: 25px; border: 1px solid var(--border-color);">
                             <h4 style="color:var(--primary-color); margin-bottom:15px; font-size:1.2rem;"><i class="fas fa-address-book"></i> 聯絡資訊區塊</h4>
                             <label style="display:block; font-weight:700; margin-bottom:8px;">LINE ID</label>
-                            <input type="text" id="cmsContactLine" class="form-control">
+                            <input type="text" id="cmsContactLine" class="form-control" style="margin-bottom:15px;">
                             <label style="display:block; font-weight:700; margin-bottom:8px;">聯絡電話</label>
-                            <input type="text" id="cmsContactPhone" class="form-control">
+                            <input type="text" id="cmsContactPhone" class="form-control" style="margin-bottom:15px;">
                             <label style="display:block; font-weight:700; margin-bottom:8px;">工作室地址</label>
                             <input type="text" id="cmsContactAddress" class="form-control">
                         </div>
@@ -731,7 +717,6 @@
             console.error("Firebase Init Error", e);
         }
 
-        // 預設完整的全站資料結構
         let globalState = { 
             tickets: [], 
             news: [
@@ -743,12 +728,12 @@
                 color: '#0071e3', 
                 showGrid: true,
                 slides: [
-                    { img: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80', title: '極致效能，專為您打造。', desc: '扎根基隆十年，專注於頂級電腦客製化與系統開發。' },
+                    { img: 'https://images.unsplash.com/photo-1587202372634-32705e3bf49c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80', title: '極致效能，專為您打造。', desc: '扎根基隆十年，專注於頂級電腦客製化與系統維護。' },
                     { img: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80', title: '硬體維修，精準排除。', desc: '主機板級別精細檢修，找出核心故障無損修復。' },
-                    { img: 'https://images.unsplash.com/photo-1555099962-4199c345e5dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80', title: '企業級系統軟體開發', desc: 'Su.線上點餐系統，助力在地店家數位轉型。' }
+                    { img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80', title: '企業級網路與伺服器建置', desc: '為中小企業量身打造穩定、安全的雲端儲存環境。' }
                 ],
                 aboutTitle: '基隆在地深耕\nSu. Studio 十年淬鍊',
-                aboutText: '2016年成立於基隆。秉持著「電腦不只是工具，更是職人精神的展現」之信念。我們不僅專精於高階電競主機組裝與硬體檢修，更具備強大的軟體開發實力（如 Su.線上點餐系統）。',
+                aboutText: '2016年成立於基隆。秉持著「電腦不只是工具，更是職人精神的展現」之信念。我們專精於高階電競主機組裝、硬體深度檢修、資料救援以及中小企業的網路伺服器建置。',
                 aboutImg: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=1200&auto=format&fit=crop',
                 contactLine: 'c468116',
                 contactPhone: '0933-238-461',
@@ -758,11 +743,9 @@
 
         let heroSwiper = null;
 
-        // 斷線備援：直接渲染畫面
         function fallbackRender() {
             applyCMS(globalState.cms);
             renderNewsFront();
-            renderTicketsFront();
         }
 
         async function initDB() {
@@ -793,13 +776,10 @@
         
         initDB();
 
-        // ---------------- 前台渲染函式 ---------------- //
-
         function applyCMS(cms) {
             document.documentElement.style.setProperty('--primary-color', cms.color);
             if(cms.showGrid) document.body.classList.add('show-grid'); else document.body.classList.remove('show-grid');
             
-            // 幻燈片渲染
             const wrapper = document.getElementById('hero-swiper-wrapper');
             let slideHTML = '';
             cms.slides.forEach(s => {
@@ -830,10 +810,18 @@
             document.getElementById('cms-about-desc').innerHTML = cms.aboutText.replace(/\n/g, '<br>');
             document.getElementById('cms-about-img').src = cms.aboutImg;
 
+            // 聯絡資訊與動態地圖、電話超連結綁定
             document.getElementById('cms-contact-line').innerText = cms.contactLine;
             document.getElementById('cms-contact-line-link').href = `https://line.me/ti/p/~${cms.contactLine}`;
+            
             document.getElementById('cms-contact-phone').innerText = cms.contactPhone;
+            // 移除非數字字元以符合 tel: 格式 (例如: tel:0933238461)
+            const purePhone = cms.contactPhone.replace(/\D/g, ''); 
+            document.getElementById('cms-contact-phone-link').href = `tel:${purePhone}`;
+            
             document.getElementById('cms-contact-address').innerText = cms.contactAddress;
+            // 動態生成 Google Maps 搜尋連結
+            document.getElementById('cms-contact-address-link').href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cms.contactAddress)}`;
         }
 
         function renderNewsFront() {
@@ -844,7 +832,7 @@
                 frontList.innerHTML = '<div style="color:#888; text-align:center;">目前尚無最新公告</div>';
             } else {
                 frontList.innerHTML = sortedNews.slice(0, 3).map(n => `
-                    <a onclick="window.viewNewsDetail('${n.id}')" class="news-item">
+                    <a onclick="window.viewNewsDetail('${n.id}')" class="news-item glow-hover" style="border-radius:16px; padding:20px; background:rgba(255,255,255,0.5); margin-bottom:10px;">
                         <div class="news-date">${n.date}</div>
                         <div class="news-title">${String(n.title).replace(/</g, "&lt;")}</div>
                         <i class="fas fa-arrow-right" style="color:var(--border-light);"></i>
@@ -870,7 +858,7 @@
                 archiveHTML += `<div class="year-divider">${year}</div>`;
                 groupedByYear[year].forEach(n => {
                     archiveHTML += `
-                        <a onclick="window.viewNewsDetail('${n.id}')" class="news-item" style="background:#fff; padding:20px; border-radius:12px; margin-bottom:10px; border:1px solid var(--border-color);">
+                        <a onclick="window.viewNewsDetail('${n.id}')" class="news-item glow-hover" style="background:#fff; padding:20px; border-radius:16px; margin-bottom:10px; border:1px solid var(--border-color);">
                             <div class="news-date">${n.date}</div>
                             <div class="news-title">${String(n.title).replace(/</g, "&lt;")}</div>
                             <i class="fas fa-arrow-right" style="color:var(--primary-color);"></i>
@@ -892,29 +880,7 @@
             }
         };
 
-        function renderTicketsFront() {
-            const list = document.getElementById('messageList');
-            if (globalState.tickets.length === 0) {
-                list.innerHTML = '<div style="text-align:center; padding: 40px; color:#888;"><i class="fas fa-inbox fa-3x" style="opacity:0.3; margin-bottom:15px; display:block;"></i>目前尚無報修紀錄，歡迎填寫表單諮詢！</div>';
-                return;
-            }
-            const displayTickets = [...globalState.tickets].reverse().slice(0, 15);
-            list.innerHTML = displayTickets.map(t => {
-                const safeName = String(t.name).replace(/</g, "&lt;");
-                const safeIssue = String(t.issue).replace(/</g, "&lt;").replace(/\n/g, "<br>");
-                return `
-                <div style="background: #fff; padding: 20px; border-radius: 16px; border: 1px solid var(--border-color); text-align: left; position: relative;" class="glow-hover">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <div style="font-weight: 700; color: var(--text-main);"><i class="fas fa-user-circle" style="color:var(--primary-color); margin-right:5px;"></i> ${safeName}</div>
-                        <div style="font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-tech);">${t.date}</div>
-                    </div>
-                    <div style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6;">${safeIssue}</div>
-                </div>`;
-            }).join('');
-        }
-
-        // ---------------- 後台渲染與邏輯 ---------------- //
-
+        // 後台清單
         function renderTicketsAdmin() {
             const tbody = document.getElementById('adminTicketList');
             if (globalState.tickets.length === 0) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px; color:#888;">目前無報修單</td></tr>'; return; }
@@ -924,7 +890,7 @@
                     <td style="font-weight: 700;">${String(t.name).replace(/</g, "&lt;")}</td>
                     <td style="color: var(--primary-color); font-weight: 600;">${String(t.phone).replace(/</g, "&lt;")}</td>
                     <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${String(t.issue).replace(/</g, "&lt;")}</td>
-                    <td><button onclick="deleteTicket('${t.id}')" style="background:#ff4444; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;">刪除</button></td>
+                    <td><button onclick="deleteTicket('${t.id}')" style="background:#ff3b30; color:#fff; border:none; padding:8px 14px; border-radius:8px; cursor:pointer; font-weight:bold;">刪除</button></td>
                 </tr>
             `).join('');
         }
@@ -936,17 +902,18 @@
                 <tr style="border-bottom: 1px solid #eee;">
                     <td style="font-family: var(--font-tech); font-size: 0.85rem; color:#888;">${n.date}</td>
                     <td style="font-weight: 700;">${String(n.title).replace(/</g, "&lt;")}</td>
-                    <td><button onclick="deleteNews('${n.id}')" style="background:#ff4444; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer;">刪除</button></td>
+                    <td><button onclick="deleteNews('${n.id}')" style="background:#ff3b30; color:#fff; border:none; padding:8px 14px; border-radius:8px; cursor:pointer; font-weight:bold;">刪除</button></td>
                 </tr>
             `).join('');
         }
 
+        // 送出工單
         document.getElementById('repairForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             if(!dbRef) return alert("資料庫未連線，無法送出表單。");
 
             const btn = document.getElementById('submitBtn');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 傳送中...';
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 加密傳送中...';
             btn.disabled = true;
 
             const name = document.getElementById('ticketName').value.trim();
@@ -960,16 +927,16 @@
             try {
                 await updateDoc(dbRef, { tickets: arrayUnion(newTicket) });
                 document.getElementById('repairForm').reset();
-                alert('報修紀錄已成功送出！技師將盡快為您評估。');
+                alert('✅ 報修紀錄已安全送出！技師將盡快為您評估。');
             } catch (err) {
-                alert("寫入失敗。請確認 Firebase 規則是否為 allow read, write: if true;");
+                alert("寫入失敗。");
             } finally {
-                btn.innerHTML = '<i class="fas fa-paper-plane"></i> 送出加密工單';
+                btn.innerHTML = '<i class="fas fa-lock"></i> 安全送出工單';
                 btn.disabled = false;
             }
         });
 
-        // 登入
+        // 登入系統 (SHA-256 加密)
         let clickCount = 0; let clickTimer;
         document.getElementById('adminTrigger').addEventListener('click', () => {
             clickCount++; clearTimeout(clickTimer);
@@ -986,46 +953,66 @@
             setTimeout(()=> m.style.display = 'none', 300);
         };
 
-        window.attemptLogin = function() {
+        // 非同步 SHA-256 雜湊函式
+        async function hashSHA256(message) {
+            const msgBuffer = new TextEncoder().encode(message);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        window.attemptLogin = async function() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
             
-            if(btoa(user) === 'S29yYWxiYQ==' && btoa(pass) === 'VGhpczEyMzQ=') {
-                closeLogin();
-                document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active'));
-                document.getElementById('admin-panel').style.display = 'block';
-                
-                const cms = globalState.cms;
-                document.getElementById('cmsColor').value = cms.color;
-                document.getElementById('cmsShowGrid').checked = cms.showGrid;
-                
-                if(cms.slides[0]) {
-                    document.getElementById('cmsS1Img').value = cms.slides[0].img || '';
-                    document.getElementById('cmsS1Title').value = cms.slides[0].title || '';
-                    document.getElementById('cmsS1Desc').value = cms.slides[0].desc || '';
-                }
-                if(cms.slides[1]) {
-                    document.getElementById('cmsS2Img').value = cms.slides[1].img || '';
-                    document.getElementById('cmsS2Title').value = cms.slides[1].title || '';
-                    document.getElementById('cmsS2Desc').value = cms.slides[1].desc || '';
-                }
-                if(cms.slides[2]) {
-                    document.getElementById('cmsS3Img').value = cms.slides[2].img || '';
-                    document.getElementById('cmsS3Title').value = cms.slides[2].title || '';
-                    document.getElementById('cmsS3Desc').value = cms.slides[2].desc || '';
-                }
+            try {
+                const userHash = await hashSHA256(user);
+                const passHash = await hashSHA256(pass);
 
-                document.getElementById('cmsAboutTitle').value = cms.aboutTitle;
-                document.getElementById('cmsAboutDesc').value = cms.aboutText;
-                document.getElementById('cmsAboutImg').value = cms.aboutImg;
+                if(userHash === '94c8b671a53dbd98d259c1184d0b13bf1e021c3fa360cbfda2d921473cdce148' && 
+                   passHash === '00445d4d3af19cb4214fbcbb4599520e53a5160844781463138b322a3fcbb06e') {
+                    
+                    closeLogin();
+                    document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active'));
+                    document.getElementById('admin-panel').style.display = 'block';
+                    
+                    const cms = globalState.cms;
+                    document.getElementById('cmsColor').value = cms.color;
+                    document.getElementById('cmsShowGrid').checked = cms.showGrid;
+                    
+                    if(cms.slides[0]) {
+                        document.getElementById('cmsS1Img').value = cms.slides[0].img || '';
+                        document.getElementById('cmsS1Title').value = cms.slides[0].title || '';
+                        document.getElementById('cmsS1Desc').value = cms.slides[0].desc || '';
+                    }
+                    if(cms.slides[1]) {
+                        document.getElementById('cmsS2Img').value = cms.slides[1].img || '';
+                        document.getElementById('cmsS2Title').value = cms.slides[1].title || '';
+                        document.getElementById('cmsS2Desc').value = cms.slides[1].desc || '';
+                    }
+                    if(cms.slides[2]) {
+                        document.getElementById('cmsS3Img').value = cms.slides[2].img || '';
+                        document.getElementById('cmsS3Title').value = cms.slides[2].title || '';
+                        document.getElementById('cmsS3Desc').value = cms.slides[2].desc || '';
+                    }
 
-                document.getElementById('cmsContactLine').value = cms.contactLine;
-                document.getElementById('cmsContactPhone').value = cms.contactPhone;
-                document.getElementById('cmsContactAddress').value = cms.contactAddress;
-                
-                renderTicketsAdmin();
-                renderNewsAdmin();
-            } else { alert('Access Denied: 帳號或密碼錯誤！'); }
+                    document.getElementById('cmsAboutTitle').value = cms.aboutTitle;
+                    document.getElementById('cmsAboutDesc').value = cms.aboutText;
+                    document.getElementById('cmsAboutImg').value = cms.aboutImg;
+
+                    document.getElementById('cmsContactLine').value = cms.contactLine;
+                    document.getElementById('cmsContactPhone').value = cms.contactPhone;
+                    document.getElementById('cmsContactAddress').value = cms.contactAddress;
+                    
+                    renderTicketsAdmin();
+                    renderNewsAdmin();
+                } else { 
+                    alert('Access Denied: 驗證失敗！'); 
+                }
+            } catch (e) {
+                console.error("Crypto API error", e);
+                alert('安全性驗證發生錯誤，請確認環境支援 Web Crypto API。');
+            }
         };
 
         window.logoutAdmin = function() {
@@ -1048,10 +1035,8 @@
             const slides = [];
             const s1Img = document.getElementById('cmsS1Img').value;
             if(s1Img) slides.push({ img: s1Img, title: document.getElementById('cmsS1Title').value, desc: document.getElementById('cmsS1Desc').value });
-            
             const s2Img = document.getElementById('cmsS2Img').value;
             if(s2Img) slides.push({ img: s2Img, title: document.getElementById('cmsS2Title').value, desc: document.getElementById('cmsS2Desc').value });
-            
             const s3Img = document.getElementById('cmsS3Img').value;
             if(s3Img) slides.push({ img: s3Img, title: document.getElementById('cmsS3Title').value, desc: document.getElementById('cmsS3Desc').value });
 
@@ -1069,7 +1054,7 @@
             try {
                 await updateDoc(dbRef, { cms: newCms });
                 alert('✅ 全站版面設定已成功儲存並同步至前台！');
-            } catch (err) { alert('儲存失敗，請確認 Firebase Rules 權限。'); }
+            } catch (err) { alert('儲存失敗，請確認 Firebase 權限。'); }
         };
 
         window.addNews = async function() {
@@ -1102,8 +1087,6 @@
             try { await updateDoc(dbRef, { tickets: newTickets }); } catch (err) { alert('刪除失敗'); }
         };
 
-        // ---------------- 導航與互動邏輯 ---------------- //
-
         // 平滑導航與自動計算 Header 偏移
         window.navigate = function(viewName, targetId = null) {
             document.querySelectorAll('.spa-view').forEach(v => v.classList.remove('active'));
@@ -1113,8 +1096,7 @@
                 setTimeout(() => {
                     const el = document.getElementById(targetId);
                     if (el) {
-                        // 扣除頂部 Header 的高度 (約 80px)，避免標題被遮擋
-                        const y = el.getBoundingClientRect().top + window.scrollY - 80;
+                        const y = el.getBoundingClientRect().top + window.scrollY - 85;
                         window.scrollTo({ top: y, behavior: 'smooth' });
                     }
                 }, 100);
@@ -1128,12 +1110,14 @@
 
         // 互動檢測
         window.showDiagResult = function(type) {
-            document.querySelectorAll('#diagnostics button').forEach(b => {
+            document.querySelectorAll('.diag-btn').forEach(b => {
                 b.style.backgroundColor = '#fff'; 
                 b.style.color = 'var(--text-main)';
+                b.style.borderColor = 'var(--border-color)';
             });
             event.currentTarget.style.backgroundColor = 'var(--primary-color)';
             event.currentTarget.style.color = '#fff';
+            event.currentTarget.style.borderColor = 'var(--primary-color)';
             
             document.querySelectorAll('[id^="diag-"]').forEach(r => r.style.display = 'none');
             document.getElementById('diag-' + type).style.display = 'block';
@@ -1157,7 +1141,7 @@
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
-        }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         const header = document.getElementById('header');
@@ -1165,9 +1149,11 @@
         
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) { 
-                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)'; 
+                header.style.boxShadow = '0 10px 30px rgba(0,0,0,0.08)'; 
+                header.style.background = 'rgba(255, 255, 255, 0.85)';
             } else { 
                 header.style.boxShadow = 'none'; 
+                header.style.background = 'var(--nav-bg)';
             }
             if (window.scrollY > 400) {
                 backToTopBtn.classList.add('show');
@@ -1185,12 +1171,11 @@
             menuToggle.addEventListener('click', () => navMenu.classList.toggle('show'));
         }
 
-        // 手機版下拉選單 (Accordion)
+        // 手機版下拉選單 (平滑展開修正)
         if(window.innerWidth <= 768) {
             document.querySelectorAll('.dropdown-container > span').forEach(el => {
                 el.addEventListener('click', function(e) {
                     const parent = this.parentElement;
-                    // 收合其他選項
                     document.querySelectorAll('.dropdown-container').forEach(c => {
                         if(c !== parent) c.classList.remove('active');
                     });
