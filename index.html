@@ -97,9 +97,7 @@
 
         .menu-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--primary-color); }
 
-        .back-to-top { position: fixed; bottom: 40px; right: 40px; width: 50px; height: 50px; border-radius: 50%; background: #fff; border: 1px solid var(--border-light); color: var(--primary-color); font-size: 1.2rem; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: var(--shadow-md); transition: var(--transition-fast); z-index: 1001; opacity: 0; pointer-events: none; transform: translateY(20px);}
-        .back-to-top.show { opacity: 1; pointer-events: auto; transform: translateY(0);}
-        .back-to-top:hover { background: var(--primary-color); color: #fff; border-color: var(--primary-color);}
+        /* .back-to-top 統一定義於下方 RWD 區塊前 */
 
         /* ================= Hero 沉浸式幻燈片 (超慢速縮放) ================= */
         .hero { height: 100vh; position: relative; background: #000; overflow: hidden;}
@@ -210,6 +208,195 @@
         th, td { padding: 20px 15px; border-bottom: 1px solid #eee; }
         th { color: var(--text-muted); font-size: 0.9rem; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;}
 
+        /* ================= 白色區塊底部裝飾帶 ================= */
+        .section-wave-divider {
+            position: relative;
+            overflow: hidden;
+        }
+        .section-wave-divider::after {
+            content: '';
+            display: block;
+            height: 80px;
+            background: linear-gradient(135deg, transparent 40%, var(--bg-soft) 40%),
+                        linear-gradient(-135deg, transparent 40%, var(--bg-soft) 40%);
+            background-size: 60px 80px;
+            background-repeat: repeat-x;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+        }
+
+        /* 首頁全白新聞區塊底部裝飾 */
+        .white-section-bottom-deco {
+            position: relative;
+            padding-bottom: 100px !important;
+        }
+        .white-section-bottom-deco::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                transparent 0%,
+                var(--accent-color) 20%, 
+                var(--primary-color) 50%,
+                var(--accent-color) 80%,
+                transparent 100%);
+            opacity: 0.25;
+            animation: shimmerLine 3s ease-in-out infinite;
+        }
+        @keyframes shimmerLine {
+            0%, 100% { opacity: 0.15; }
+            50% { opacity: 0.4; }
+        }
+
+        /* 白色區塊 floating geometric deco */
+        .geo-deco {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .geo-deco-1 {
+            bottom: 20px;
+            left: 5%;
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--accent-color);
+            opacity: 0.07;
+            transform: rotate(15deg);
+            animation: geoDrift1 8s ease-in-out infinite;
+        }
+        .geo-deco-2 {
+            bottom: 40px;
+            right: 8%;
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            opacity: 0.05;
+            animation: geoDrift2 10s ease-in-out infinite;
+        }
+        .geo-deco-3 {
+            bottom: 10px;
+            left: 40%;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-color);
+            opacity: 0.06;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: geoDrift1 12s ease-in-out infinite reverse;
+        }
+        @keyframes geoDrift1 {
+            0%, 100% { transform: rotate(15deg) translateY(0); }
+            50% { transform: rotate(25deg) translateY(-12px); }
+        }
+        @keyframes geoDrift2 {
+            0%, 100% { transform: scale(1) translateY(0); }
+            50% { transform: scale(1.1) translateY(-8px); }
+        }
+
+        /* 科技線條裝飾帶 (白色區塊底) */
+        .tech-line-deco {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 30px 0 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .tech-line-deco span {
+            display: inline-block;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            animation: techLinePulse 2.5s ease-in-out infinite;
+        }
+        .tech-line-deco span:nth-child(1) { width: 60px; animation-delay: 0s; }
+        .tech-line-deco span:nth-child(2) { width: 120px; animation-delay: 0.3s; }
+        .tech-line-deco span:nth-child(3) { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-color); opacity: 0.4; animation-delay: 0.6s; }
+        .tech-line-deco span:nth-child(4) { width: 120px; animation-delay: 0.3s; }
+        .tech-line-deco span:nth-child(5) { width: 60px; animation-delay: 0s; }
+        @keyframes techLinePulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.6; }
+        }
+
+        /* ================= 回頂部按鈕 (升級版) ================= */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--border-light);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-fast);
+            z-index: 1001;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(20px);
+            overflow: hidden;
+        }
+        .back-to-top::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            opacity: 0;
+            transform: scale(0.7);
+            transition: 0.4s var(--ease-out-expo);
+        }
+        .back-to-top::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: conic-gradient(var(--accent-color) 0deg, transparent 0deg);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        .back-to-top.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+            animation: ringPulse 2.5s ease-in-out 1s 2;
+        }
+        .back-to-top:hover {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+            transform: translateY(-4px) scale(1.08);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.18);
+        }
+        .back-to-top:hover::before {
+            opacity: 1;
+            transform: scale(1.2);
+        }
+        .back-to-top i {
+            transition: transform 0.3s var(--ease-out-expo);
+        }
+        .back-to-top:hover i {
+            transform: translateY(-3px);
+        }
+        /* 脈衝光圈動畫 */
+        @keyframes ringPulse {
+            0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.3); }
+            70% { box-shadow: 0 0 0 12px rgba(212,175,55,0); }
+            100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+        }
         /* ================= RWD ================= */
         @media (max-width: 1024px) {
             .section-title { font-size: 2.8rem; }
@@ -221,20 +408,133 @@
             .header { padding: 15px 25px; }
             .controls { display: none; }
             .menu-toggle { display: block; }
-            
-            .nav { display: none; width: 100%; position: absolute; top: 100%; left: 0; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-light); box-shadow: var(--shadow-sm); padding: 0;}
-            .nav.show { display: block; animation: fadeIn 0.3s ease; }
-            .nav ul { flex-direction: column; gap: 0; padding: 10px 0;}
-            .nav li.dropdown-container { width: 100%; border-bottom: 1px solid rgba(0,0,0,0.03); padding: 0;}
-            .nav a, .nav span { padding: 20px 30px; font-size: 1.1rem; }
-            .nav a::after, .nav span::after { display: none; }
-            .nav li span::after { float: right; margin-top: 5px; content: '\f107'; display: inline-block;}
-            
-            .nav .dropdown { position: static; transform: none; box-shadow: none; opacity: 1; visibility: visible; display: none; background: var(--bg-soft); margin: 0; padding: 0; border: none; border-radius: 0; min-width: 100%;}
-            .nav li.dropdown-container.active .dropdown { display: block; }
-            .nav li.dropdown-container.active span::after { transform: rotate(180deg); color: var(--accent-color);}
-            .nav .dropdown a { padding: 15px 30px 15px 50px; font-size: 1rem; border-bottom: 1px solid rgba(0,0,0,0.03); margin: 0; }
-            
+
+            /* === 行動導覽列整體容器 === */
+            .nav {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background: rgba(255,255,255,0.99);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 2px solid var(--border-light);
+                box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+                padding: 8px 0 16px;
+                max-height: 85vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .nav.show { display: block; animation: fadeIn 0.25s ease; }
+
+            /* === 行動導覽列 UL === */
+            .nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                width: 100%;
+            }
+
+            /* === 每個一級選項 === */
+            .nav li.dropdown-container {
+                width: 100%;
+                position: relative;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+                padding: 0;
+                display: block;
+            }
+
+            /* === 一級按鈕文字 span === */
+            .nav li.dropdown-container > span {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 18px 28px;
+                font-size: 1rem;
+                font-weight: 600;
+                color: var(--primary-color);
+                cursor: pointer;
+                user-select: none;
+                letter-spacing: 0.5px;
+            }
+            /* 箭頭 icon，用 FA class 加到 span 的 ::after */
+            .nav li.dropdown-container > span::after {
+                content: '\f107';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                transition: transform 0.3s ease, color 0.3s;
+                display: inline-block;
+                flex-shrink: 0;
+                margin-left: 10px;
+            }
+            .nav li.dropdown-container.active > span::after {
+                transform: rotate(180deg);
+                color: var(--accent-color);
+            }
+            .nav a::after { display: none; }
+
+            /* === 下拉選單 (核心修正) === */
+            .nav .dropdown {
+                /* 重置桌面版的定位 */
+                position: static !important;
+                transform: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                /* 預設收起：高度 0，溢出隱藏 */
+                max-height: 0;
+                overflow: hidden;
+                display: block !important; /* 不用 display:none 避免跳位 */
+                /* 動畫 */
+                transition: max-height 0.35s ease, padding 0.35s ease;
+                /* 外觀 */
+                background: #f8f8f8;
+                border-left: 3px solid var(--accent-color);
+                margin: 0 16px 0 28px;
+                border-radius: 0 0 6px 6px;
+                box-shadow: none;
+                border-top: none;
+                padding: 0;
+                min-width: unset;
+            }
+            .nav li.dropdown-container.active .dropdown {
+                max-height: 400px; /* 足夠顯示所有子項目 */
+                padding: 6px 0;
+            }
+
+            /* === 下拉子連結 === */
+            .nav .dropdown a {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                padding: 14px 20px;
+                font-size: 0.92rem;
+                font-weight: 400;
+                color: var(--text-muted);
+                border-bottom: 1px solid rgba(0,0,0,0.04);
+                transition: background 0.2s, color 0.2s, padding-left 0.2s;
+            }
+            .nav .dropdown a:last-child { border-bottom: none; }
+            .nav .dropdown a:hover, .nav .dropdown a:active {
+                color: var(--primary-color);
+                background: rgba(212,175,55,0.07);
+                padding-left: 28px;
+            }
+
+            /* 回頂部按鈕 — 行動版：更小更靠右下角 */
+            .back-to-top {
+                bottom: 20px;
+                right: 18px;
+                width: 40px;
+                height: 40px;
+                font-size: 0.95rem;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            }
+
             .hero { height: 85vh; }
             .hero h1 { font-size: 2.8rem; letter-spacing: 1px; }
             .section { padding: 80px 25px; }
@@ -250,6 +550,17 @@
             
             .footer { padding: 80px 25px 30px; }
             .footer-container { gap: 50px; }
+        }
+
+        /* 平板額外適配 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .back-to-top {
+                bottom: 25px;
+                right: 22px;
+                width: 44px;
+                height: 44px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -317,14 +628,26 @@
             </div>
         </section>
 
-        <section class="section reveal" style="padding-bottom: 60px;">
-            <div style="max-width:1200px; margin:0 auto;">
+        <section class="section reveal white-section-bottom-deco" style="padding-bottom: 60px; position: relative; overflow: hidden;">
+            <!-- 幾何裝飾元素 -->
+            <div class="geo-deco geo-deco-1"></div>
+            <div class="geo-deco geo-deco-2"></div>
+            <div class="geo-deco geo-deco-3"></div>
+            <div style="max-width:1200px; margin:0 auto; position: relative; z-index: 1;">
                 <div class="news-header-flex">
                     <h2 class="section-title" style="margin-bottom:0; font-size:2rem; font-family:var(--font-en);">LATEST NEWS<br><span style="font-family:var(--font-sans); font-size:1.1rem; font-weight:400; color:var(--text-muted); letter-spacing:2px;">最新動態公告</span></h2>
                     <a onclick="navigate('archive')" class="more-link">VIEW ALL <i class="fas fa-arrow-right" style="margin-left:5px;"></i></a>
                 </div>
                 <div id="front-news-list" class="stagger-reveal">
                     <div style="text-align:center; padding: 40px; color:#888;"><i class="fas fa-spinner fa-spin"></i> 資訊載入中...</div>
+                </div>
+                <!-- 科技裝飾線 -->
+                <div class="tech-line-deco">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </div>
         </section>
@@ -541,7 +864,7 @@
             </div>
         </section>
 
-        <footer class="footer-pc62" id="contact">
+        <footer class="footer" id="contact">
             <div class="footer-container">
                 <div class="footer-col">
                     <h4>Su. Studio</h4>
@@ -1259,18 +1582,25 @@
             menuToggle.addEventListener('click', () => navMenu.classList.toggle('show'));
         }
 
-        if(window.innerWidth <= 768) {
-            document.querySelectorAll('.dropdown-container > span').forEach(el => {
-                el.addEventListener('click', function(e) {
-                    const parent = this.parentElement;
-                    document.querySelectorAll('.dropdown-container').forEach(c => {
-                        if(c !== parent) c.classList.remove('active');
-                    });
-                    parent.classList.toggle('active');
-                    e.preventDefault();
+        // 行動裝置選單下拉邏輯（所有裝置都掛載，依 nav 可見性判斷）
+        document.querySelectorAll('.dropdown-container > span').forEach(el => {
+            el.addEventListener('click', function(e) {
+                // 只在行動選單展開時處理
+                const navMenu = document.getElementById('navMenu');
+                if (!navMenu || !navMenu.classList.contains('show')) return;
+                
+                const parent = this.parentElement;
+                const isActive = parent.classList.contains('active');
+                // 收起其他開啟的選單
+                document.querySelectorAll('.dropdown-container').forEach(c => {
+                    if (c !== parent) c.classList.remove('active');
                 });
+                // 切換當前選單
+                parent.classList.toggle('active', !isActive);
+                e.preventDefault();
+                e.stopPropagation();
             });
-        }
+        });
     </script>
 </body>
 </html>
