@@ -414,7 +414,7 @@
             letter-spacing: 3px;
             border: 1px solid var(--gold-dim);
             position: relative; overflow: hidden;
-            cursor: none; transition: var(--t-med);
+            cursor: pointer; transition: var(--t-med);
             clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
         }
         .btn-premium::before {
@@ -434,7 +434,7 @@
         /* ── Mobile Toggle ── */
         .menu-toggle {
             display: none; background: none; border: none;
-            font-size: 1.4rem; cursor: none; color: var(--deep);
+            font-size: 1.4rem; cursor: pointer; color: var(--deep);
             transition: var(--t-fast);
         }
         .menu-toggle:hover { color: var(--gold); }
@@ -496,7 +496,7 @@
 
         .hero h1 {
             font-family: var(--font-display);
-            font-size: 5.2rem; font-weight: 900;
+            font-size: clamp(2rem, 6vw, 5.2rem); font-weight: 900;
             letter-spacing: 4px;
             line-height: 1.1;
             margin-bottom: 25px;
@@ -505,6 +505,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-shadow: none;
+            word-break: keep-all;
         }
 
         .hero p {
@@ -563,6 +564,7 @@
         .section {
             padding: 160px 80px;
             position: relative; z-index: 1;
+            overflow-x: hidden;
         }
         .section-center { text-align: center; }
 
@@ -585,7 +587,7 @@
 
         .section-title {
             font-family: var(--font-display);
-            font-size: 3.4rem; font-weight: 600;
+            font-size: clamp(1.8rem, 4.5vw, 3.4rem); font-weight: 600;
             letter-spacing: 3px;
             color: var(--deep);
             line-height: 1.2;
@@ -664,7 +666,7 @@
             display: flex; align-items: center;
             padding: 28px 0; border-bottom: 1px solid var(--border-subtle);
             text-decoration: none; color: inherit;
-            transition: var(--t-fast); cursor: none;
+            transition: var(--t-fast); cursor: pointer;
             gap: 30px; position: relative; overflow: hidden;
         }
         .news-item::before {
@@ -695,10 +697,11 @@
             display: flex; align-items: center;
             gap: 100px; max-width: 1300px;
             margin: 0 auto; flex-wrap: wrap;
+            overflow: hidden;
         }
-        .about-text { flex: 1; min-width: 380px; text-align: left; }
+        .about-text { flex: 1; min-width: min(380px, 100%); text-align: left; }
         .about-img-box {
-            flex: 1; min-width: 380px; height: 680px;
+            flex: 1; min-width: min(380px, 100%); height: clamp(350px, 50vw, 680px);
             position: relative;
         }
         .about-img-inner {
@@ -784,9 +787,9 @@
         .services-section { background: linear-gradient(180deg, var(--onyx) 0%, var(--onyx-2) 100%); }
         .service-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
             gap: 16px; max-width: 1300px; margin: 0 auto;
-            background: transparent;
+            background: transparent; width: 100%;
         }
         .service-card {
             background: var(--onyx-4);
@@ -850,7 +853,7 @@
         .process-section { background: var(--onyx-3); }
         .process-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
             gap: 0; max-width: 1300px; margin: 0 auto;
             position: relative;
         }
@@ -895,7 +898,7 @@
             gap: 80px; max-width: 1300px;
             margin: 0 auto; align-items: flex-start;
         }
-        .diag-left { flex: 1; min-width: 300px; text-align: left; }
+        .diag-left { flex: 1; min-width: min(300px, 100%); text-align: left; }
         .diag-icon-bg {
             font-size: 7rem; color: rgba(184,144,42,0.12);
             margin-top: 40px; line-height: 1;
@@ -903,7 +906,7 @@
         }
         .diag-left:hover .diag-icon-bg { color: rgba(184,144,42,0.2); }
 
-        .diag-right { flex: 1.5; min-width: 360px; }
+        .diag-right { flex: 1.5; min-width: min(360px, 100%); }
         .diag-btn {
             width: 100%; text-align: left;
             padding: 20px 24px 20px 20px;
@@ -1043,7 +1046,7 @@
         .reviews-section { background: var(--onyx); }
         .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(360px, 100%), 1fr));
             gap: 20px; max-width: 1300px; margin: 0 auto;
         }
         .review-card {
@@ -1139,6 +1142,7 @@
             color: #8a9bac;
             padding: 100px 80px 40px;
             position: relative; z-index: 2;
+            overflow-x: hidden;
         }
         .footer::before {
             content: ''; position: absolute;
@@ -1188,7 +1192,7 @@
         .footer-col ul li i { margin-top: 3px; color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
         .footer-col a {
             color: #8a9bac; text-decoration: none;
-            transition: var(--t-fast); cursor: none;
+            transition: var(--t-fast); cursor: pointer;
         }
         .footer-col a:hover { color: var(--gold-bright); padding-left: 4px; }
         .footer-bottom {
@@ -1210,7 +1214,7 @@
             color: var(--gold);
             font-size: 1rem;
             display: flex; justify-content: center; align-items: center;
-            cursor: none;
+            cursor: pointer;
             box-shadow: 0 0 20px rgba(201,168,76,0.1);
             transition: var(--t-med);
             z-index: 1001; opacity: 0; pointer-events: none;
@@ -1227,7 +1231,7 @@
         /* ================================================================
            SPA VIEWS
            ================================================================ */
-        .spa-view { display: none; padding-top: 150px; min-height: 80vh; max-width: 1300px; margin: 0 auto; padding-left: 80px; padding-right: 80px; }
+        .spa-view { display: none; padding-top: 150px; min-height: 80vh; max-width: 1300px; margin: 0 auto; padding-left: 80px; padding-right: 80px; overflow-x: hidden; }
         .spa-view.active { display: block; animation: fadeIn 0.8s ease; }
         @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
 
@@ -1287,7 +1291,7 @@
             padding: 16px 22px; background: transparent;
             border: 1px solid transparent;
             font-size: 0.88rem; font-weight: 400;
-            text-align: left; cursor: none;
+            text-align: left; cursor: pointer;
             color: var(--muted); transition: var(--t-fast);
             font-family: var(--font-sans); letter-spacing: 1px;
         }
@@ -1348,47 +1352,193 @@
         }
 
         /* ================================================================
-           RESPONSIVE
+           RESPONSIVE — 全面修正 RWD 跑版問題
            ================================================================ */
+
+        /* ── Tablet 平板 900px ── */
         @media (max-width: 900px) {
             body { cursor: auto; }
             #cursor-dot, #cursor-ring { display: none; }
 
-            .header { padding: 0 25px; }
-            .nav { display: none; position: absolute; top: 80px; left: 0; right: 0; background: rgba(250,248,245,0.99); border-bottom: 1px solid var(--border); padding: 20px 0; }
+            /* Header */
+            .header { padding: 0 20px; height: 70px; }
+            .logo-name { font-size: 1.05rem; }
+            .nav {
+                display: none; position: fixed;
+                top: 70px; left: 0; right: 0;
+                background: rgba(250,248,245,0.99);
+                border-bottom: 1px solid var(--border);
+                padding: 10px 0; max-height: calc(100vh - 70px);
+                overflow-y: auto; z-index: 999;
+            }
             .nav.show { display: block; }
             .nav ul { flex-direction: column; gap: 0; }
-            .nav > ul > li > a, .nav > ul > li > span { display: block; padding: 16px 30px; }
-            .nav .dropdown { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none; border: none; background: rgba(184,144,42,0.04); max-height: 0; overflow: hidden; transition: max-height 0.4s ease; padding: 0; }
+            .nav > ul > li > a,
+            .nav > ul > li > span { display: block; padding: 14px 25px; font-size: 0.9rem; }
+            .nav .dropdown {
+                position: static; transform: none; opacity: 1;
+                visibility: visible; box-shadow: none; border: none;
+                background: rgba(184,144,42,0.04); max-height: 0;
+                overflow: hidden; transition: max-height 0.4s ease; padding: 0;
+            }
             .nav li.dropdown-container.active .dropdown { max-height: 400px; padding: 8px 0; }
-            .nav li.dropdown-container:hover .dropdown { opacity: 1; visibility: visible; transform: none; max-height: 400px; }
+            .nav li.dropdown-container:hover .dropdown {
+                opacity: 1; visibility: visible; transform: none;
+            }
             .menu-toggle { display: block; cursor: pointer; }
+            /* Hide header CTA on mobile, show only hamburger */
+            .header > div > .btn-premium { display: none; }
 
-            .hero h1 { font-size: 2.8rem; }
+            /* Hero */
+            .hero { height: 100svh; min-height: 500px; }
+            .hero h1 { font-size: clamp(1.8rem, 6vw, 2.8rem); letter-spacing: 2px; }
+            .hero p { font-size: 0.88rem; letter-spacing: 1.5px; }
+            .hero-content { left: 6%; right: 6%; max-width: 100%; bottom: 14vh; }
+            .hero-actions { gap: 12px; }
+            .hero-actions .btn-premium { padding: 11px 22px; font-size: 0.72rem; letter-spacing: 2px; }
             .hero-counter { display: none; }
             .scroll-hint { display: none; }
+            .swiper-pagination { left: 6% !important; }
 
-            .section { padding: 90px 25px; }
-            .section-title { font-size: 2.2rem; }
-            .about-wrap { flex-direction: column; gap: 50px; }
-            .about-img-box { min-width: auto; width: 100%; height: 400px; }
-            .about-features { grid-template-columns: 1fr; }
-            .service-grid { grid-template-columns: 1fr; }
-            .portfolio-grid { grid-template-columns: 1fr; }
-            .reviews-grid { grid-template-columns: 1fr; }
-            .diag-wrapper { flex-direction: column; gap: 40px; }
-            .booking-card { padding: 40px 25px; }
-            .footer { padding: 80px 25px 30px; }
-            .footer-container { grid-template-columns: 1fr; gap: 50px; }
-            .spa-view { padding: 130px 25px 80px; }
+            /* Sections */
+            .section { padding: 70px 20px; }
+            .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+            .section-subtitle { font-size: 0.92rem; margin-bottom: 50px; padding: 0 5px; }
+
+            /* About */
+            .about-section .section { padding: 70px 20px; }
+            .about-wrap { flex-direction: column; gap: 40px; max-width: 100%; }
+            .about-text { flex: none; min-width: 0; width: 100%; }
+            .about-img-box {
+                flex: none; min-width: 0; width: 100%;
+                height: clamp(260px, 55vw, 420px);
+            }
+            .about-img-box::before { display: none; }
+            .about-features { grid-template-columns: 1fr 1fr; gap: 15px; }
+            .about-stats { grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+            .about-stat { padding: 18px; }
+            .about-stat-num { font-size: 1.8rem; }
+
+            /* Services */
+            .service-grid { grid-template-columns: 1fr; gap: 12px; }
+            .service-card { padding: 35px 28px; }
+
+            /* Process */
             .process-grid { grid-template-columns: 1fr 1fr; }
+            .process-card { padding: 0 25px 40px; }
+
+            /* Diagnostics */
+            .diag-wrapper { flex-direction: column; gap: 30px; }
+            .diag-left { min-width: 0; width: 100%; }
+            .diag-right { min-width: 0; width: 100%; }
+            .diag-icon-bg { font-size: 4rem; }
+
+            /* Portfolio */
+            .portfolio-grid { grid-template-columns: 1fr; gap: 12px; }
+            .portfolio-card img { height: clamp(220px, 55vw, 320px); }
+
+            /* Reviews */
+            .reviews-grid { grid-template-columns: 1fr; gap: 12px; }
+            .review-card { padding: 35px 28px; }
+
+            /* Booking */
+            .booking-card { padding: 35px 20px; }
+            .form-group { margin-bottom: 28px; }
+
+            /* News */
+            .news-header-flex { flex-direction: column; align-items: flex-start; gap: 15px; }
+            .news-header-title { font-size: 1.3rem; }
+            .news-item { gap: 14px; padding: 20px 0; }
+            .news-date { font-size: 0.75rem; }
+
+            /* Footer */
+            .footer { padding: 60px 20px 30px; }
+            .footer-container { grid-template-columns: 1fr; gap: 40px; margin-bottom: 50px; }
+            .footer-col h4 { margin-bottom: 20px; }
+
+            /* SPA Views */
+            .spa-view { padding: 100px 20px 60px; }
+            .detail-card { padding: 40px 20px; }
+            .detail-card h1 { font-size: 1.6rem; }
+            .archive-title { font-size: 1.8rem; }
+
+            /* Admin Panel */
+            .admin-header { padding: 15px 20px; flex-wrap: wrap; gap: 10px; }
+            .admin-layout { flex-direction: column; padding: 0 15px; margin: 20px auto; gap: 15px; }
+            .admin-sidebar { width: 100%; flex-direction: row; flex-wrap: wrap; gap: 6px; }
+            .admin-tab-btn { padding: 10px 15px; font-size: 0.78rem; flex: 1; min-width: 120px; text-align: center; }
+            .admin-content { padding: 25px 15px; }
+            table { min-width: 0; }
+            th, td { padding: 12px 8px; font-size: 0.82rem; }
+            td:nth-child(4), th:nth-child(4) { display: none; }
+
+            /* Back to top */
+            .back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
         }
 
-        @media (max-width: 500px) {
-            .hero h1 { font-size: 2.2rem; }
-            .about-stat { padding: 20px; }
-            .about-stats { grid-template-columns: 1fr 1fr; gap: 15px; }
+        /* ── Mobile 手機 600px ── */
+        @media (max-width: 600px) {
+            .section { padding: 55px 16px; }
+            .section-title { font-size: clamp(1.4rem, 7vw, 1.9rem); letter-spacing: 1px; }
+
+            /* Hero */
+            .hero h1 { font-size: clamp(1.5rem, 7.5vw, 2.2rem); letter-spacing: 1px; }
+            .hero p { font-size: 0.82rem; letter-spacing: 1px; margin-bottom: 28px; }
+            .hero-content { left: 5%; right: 5%; bottom: 12vh; }
+            .hero-eyebrow { font-size: 0.6rem; letter-spacing: 4px; }
+            .hero-actions { flex-direction: row; flex-wrap: wrap; gap: 10px; }
+            .hero-actions .btn-premium { font-size: 0.68rem; padding: 10px 18px; clip-path: none; }
+
+            /* About */
+            .about-img-box { height: clamp(220px, 60vw, 320px); }
+            .about-features { grid-template-columns: 1fr; gap: 12px; }
+            .about-stats { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+            .about-stat-num { font-size: 1.5rem; }
+            .about-stat-label { font-size: 0.6rem; }
+
+            /* Services */
+            .service-card { padding: 28px 20px; }
+            .service-card::after { font-size: 2.5rem; }
+
+            /* Process */
             .process-grid { grid-template-columns: 1fr; }
+            .process-card { padding: 0 0 35px; }
+            .large-num { font-size: 2.5rem; }
+
+            /* Portfolio */
+            .portfolio-card img { height: clamp(200px, 60vw, 280px); }
+
+            /* Reviews */
+            .review-card { padding: 28px 20px; }
+
+            /* Booking */
+            .booking-card { padding: 28px 15px; }
+            .form-group { margin-bottom: 24px; }
+
+            /* Diag */
+            .diag-btn { padding: 16px 16px; font-size: 0.88rem; }
+
+            /* Footer */
+            .footer { padding: 50px 16px 25px; }
+            .footer-container { gap: 35px; margin-bottom: 35px; }
+
+            /* Admin */
+            .admin-sidebar { flex-direction: column; }
+            .admin-tab-btn { width: 100%; }
+            .admin-content { padding: 20px 12px; }
+            th, td { padding: 10px 6px; font-size: 0.75rem; }
+            /* Hide extra columns on small screens */
+            td:nth-child(3), th:nth-child(3),
+            td:nth-child(4), th:nth-child(4) { display: none; }
+        }
+
+        /* ── Very Small 375px ── */
+        @media (max-width: 400px) {
+            .hero h1 { font-size: 1.4rem; }
+            .section-title { font-size: 1.35rem; }
+            .about-stats { grid-template-columns: 1fr 1fr; }
+            .btn-premium { letter-spacing: 1.5px; padding: 10px 16px; }
+            .booking-card { padding: 22px 12px; }
         }
 
         /* ── Admin hidden trigger ── */
@@ -2102,6 +2252,15 @@
                         <input type="text" id="cmsAboutImg" class="admin-input-style" placeholder="https://..." style="margin-bottom:0;">
                     </div>
                     <div style="background:var(--onyx-3); padding:30px; border:1px solid var(--border-subtle); margin-bottom:20px;">
+                        <h4 style="color:var(--platinum); margin-bottom:20px; font-size:1rem; font-weight:600; letter-spacing:2px; font-family:var(--font-mono);">關於我們 — 標語 / 預約區文字</h4>
+                        <label style="display:block; color:var(--muted); margin-bottom:8px; font-size:0.82rem;">關於我們小標語（如：Since 2016）</label>
+                        <input type="text" id="cmsAboutTagline" class="admin-input-style">
+                        <label style="display:block; color:var(--muted); margin-bottom:8px; font-size:0.82rem;">預約區大標題</label>
+                        <input type="text" id="cmsBookingTitle" class="admin-input-style" placeholder="線上報修預約">
+                        <label style="display:block; color:var(--muted); margin-bottom:8px; font-size:0.82rem;">預約區副標題說明</label>
+                        <textarea id="cmsBookingSubtitle" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;"></textarea>
+                    </div>
+                    <div style="background:var(--onyx-3); padding:30px; border:1px solid var(--border-subtle); margin-bottom:20px;">
                         <h4 style="color:var(--platinum); margin-bottom:20px; font-size:1rem; font-weight:600; letter-spacing:2px; font-family:var(--font-mono);">聯絡資訊區塊</h4>
                         <label style="display:block; color:var(--muted); margin-bottom:8px; font-size:0.82rem;">LINE ID</label>
                         <input type="text" id="cmsContactLine" class="admin-input-style">
@@ -2110,7 +2269,83 @@
                         <label style="display:block; color:var(--muted); margin-bottom:8px; font-size:0.82rem;">實體地址</label>
                         <input type="text" id="cmsContactAddress" class="admin-input-style" style="margin-bottom:0;">
                     </div>
-                    <button onclick="saveCmsSettings()" class="btn-premium dark" style="width:100%; padding:18px; font-size:0.9rem; clip-path:none;">儲存並即時套用</button>
+                    <div style="background:var(--onyx-3); padding:30px; border:1px solid var(--border-subtle); margin-bottom:20px;">
+                        <h4 style="color:var(--platinum); margin-bottom:20px; font-size:1rem; font-weight:600; letter-spacing:2px; font-family:var(--font-mono);">服務項目（6張卡片）</h4>
+                        <p style="font-size:0.8rem; color:var(--muted); margin-bottom:20px;">修改後按下方「儲存並即時套用」生效。</p>
+                        <div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">服務 1</h5>
+                            <input type="text" id="cmsSvc1Title" class="admin-input-style" placeholder="服務名稱">
+                            <textarea id="cmsSvc1Desc" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;" placeholder="服務說明"></textarea>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">服務 2</h5>
+                            <input type="text" id="cmsSvc2Title" class="admin-input-style" placeholder="服務名稱">
+                            <textarea id="cmsSvc2Desc" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;" placeholder="服務說明"></textarea>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">服務 3</h5>
+                            <input type="text" id="cmsSvc3Title" class="admin-input-style" placeholder="服務名稱">
+                            <textarea id="cmsSvc3Desc" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;" placeholder="服務說明"></textarea>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">服務 4</h5>
+                            <input type="text" id="cmsSvc4Title" class="admin-input-style" placeholder="服務名稱">
+                            <textarea id="cmsSvc4Desc" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;" placeholder="服務說明"></textarea>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">服務 5</h5>
+                            <input type="text" id="cmsSvc5Title" class="admin-input-style" placeholder="服務名稱">
+                            <textarea id="cmsSvc5Desc" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;" placeholder="服務說明"></textarea>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">服務 6</h5>
+                            <input type="text" id="cmsSvc6Title" class="admin-input-style" placeholder="服務名稱">
+                            <textarea id="cmsSvc6Desc" class="admin-input-style" style="min-height:70px; resize:vertical; margin-bottom:0;" placeholder="服務說明"></textarea>
+                        </div>
+                    </div>
+                    <div style="background:var(--onyx-3); padding:30px; border:1px solid var(--border-subtle); margin-bottom:20px;">
+                        <h4 style="color:var(--platinum); margin-bottom:20px; font-size:1rem; font-weight:600; letter-spacing:2px; font-family:var(--font-mono);">作品展示（3張圖）</h4>
+                        <div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">作品 1</h5>
+                            <input type="text" id="cmsPf1Img" class="admin-input-style" placeholder="圖片網址">
+                            <input type="text" id="cmsPf1Title" class="admin-input-style" placeholder="作品標題">
+                            <input type="text" id="cmsPf1Sub" class="admin-input-style" style="margin-bottom:0;" placeholder="英文副標（如：Custom Cable Management）">
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">作品 2</h5>
+                            <input type="text" id="cmsPf2Img" class="admin-input-style" placeholder="圖片網址">
+                            <input type="text" id="cmsPf2Title" class="admin-input-style" placeholder="作品標題">
+                            <input type="text" id="cmsPf2Sub" class="admin-input-style" style="margin-bottom:0;" placeholder="英文副標（如：Custom Cable Management）">
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">作品 3</h5>
+                            <input type="text" id="cmsPf3Img" class="admin-input-style" placeholder="圖片網址">
+                            <input type="text" id="cmsPf3Title" class="admin-input-style" placeholder="作品標題">
+                            <input type="text" id="cmsPf3Sub" class="admin-input-style" style="margin-bottom:0;" placeholder="英文副標（如：Custom Cable Management）">
+                        </div>
+                    </div>
+                    <div style="background:var(--onyx-3); padding:30px; border:1px solid var(--border-subtle); margin-bottom:20px;">
+                        <h4 style="color:var(--platinum); margin-bottom:20px; font-size:1rem; font-weight:600; letter-spacing:2px; font-family:var(--font-mono);">客戶評價（3則）</h4>
+                        <div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">評價 1</h5>
+                            <textarea id="cmsRv1Text" class="admin-input-style" style="min-height:80px; resize:vertical;" placeholder="評價內容（含引號）"></textarea>
+                            <div style="display:grid; grid-template-columns:1fr 1fr 80px; gap:8px;">
+                                <input type="text" id="cmsRv1Name" class="admin-input-style" placeholder="姓名" style="margin-bottom:0;">
+                                <input type="text" id="cmsRv1Role" class="admin-input-style" placeholder="服務類型" style="margin-bottom:0;">
+                                <input type="text" id="cmsRv1Avatar" class="admin-input-style" placeholder="姓" style="margin-bottom:0;">
+                            </div>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">評價 2</h5>
+                            <textarea id="cmsRv2Text" class="admin-input-style" style="min-height:80px; resize:vertical;" placeholder="評價內容（含引號）"></textarea>
+                            <div style="display:grid; grid-template-columns:1fr 1fr 80px; gap:8px;">
+                                <input type="text" id="cmsRv2Name" class="admin-input-style" placeholder="姓名" style="margin-bottom:0;">
+                                <input type="text" id="cmsRv2Role" class="admin-input-style" placeholder="服務類型" style="margin-bottom:0;">
+                                <input type="text" id="cmsRv2Avatar" class="admin-input-style" placeholder="姓" style="margin-bottom:0;">
+                            </div>
+                        </div><div style="background:var(--onyx-2); padding:18px; border:1px solid var(--border-subtle); margin-bottom:10px;">
+                            <h5 style="margin-bottom:12px; font-weight:500; color:var(--silver); font-size:0.85rem;">評價 3</h5>
+                            <textarea id="cmsRv3Text" class="admin-input-style" style="min-height:80px; resize:vertical;" placeholder="評價內容（含引號）"></textarea>
+                            <div style="display:grid; grid-template-columns:1fr 1fr 80px; gap:8px;">
+                                <input type="text" id="cmsRv3Name" class="admin-input-style" placeholder="姓名" style="margin-bottom:0;">
+                                <input type="text" id="cmsRv3Role" class="admin-input-style" placeholder="服務類型" style="margin-bottom:0;">
+                                <input type="text" id="cmsRv3Avatar" class="admin-input-style" placeholder="姓" style="margin-bottom:0;">
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="saveCmsSettings()" class="btn-premium dark" style="width:100%; padding:18px; font-size:0.9rem; clip-path:none; cursor:pointer;">💾 儲存全部設定並即時套用至前台</button>
                 </div>
             </div>
         </div>
@@ -2356,7 +2591,29 @@ window.navigate = function(viewName, targetId = null) {
             aboutImg: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?q=80&w=1200&auto=format&fit=crop',
             contactLine: 'c468116',
             contactPhone: '0933-238-461',
-            contactAddress: '基隆市安樂區安和一街330巷'
+            contactAddress: '基隆市安樂區安和一街330巷',
+            services: [
+                { title: '極致客製化組裝', desc: '依據預算與極致效能需求，嚴選零件，提供頂級整機組裝、完美走線與高階水冷方案建置。' },
+                { title: '硬體升級與優化', desc: '針對老舊電腦提供 SSD 與記憶體升級，搭配深度系統優化，讓舊愛機煥然一新。' },
+                { title: '系統重灌與軟體安裝', desc: '提供純淨版 Windows/macOS 系統重灌、硬體驅動完善配置，以及必備應用軟體安裝。' },
+                { title: '硬體深度檢修', desc: '針對不開機、藍白畫面提供精準交叉測試。用科學數據找出核心問題，無損修復。' },
+                { title: '高階資料救援', desc: '硬碟壞軌、誤刪檔案、隨身碟讀不到？透過專業軟硬體設備，盡力搶救珍貴資料。' },
+                { title: '企業級伺服器建置', desc: '專為中小企業打造高穩定性 NAS 雲端儲存、權限控管、網路規劃與自動化備份方案。' }
+            ],
+            portfolio: [
+                { img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?q=80&w=800', title: '旗艦電競主機組裝', sub: 'Custom Cable Management' },
+                { img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?q=80&w=800', title: '企業級 NAS 伺服器建置', sub: 'Enterprise Server & Storage' },
+                { img: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=800', title: '主機板精密級維修', sub: 'Component Level Diagnostics' }
+            ],
+            reviews: [
+                { text: '「原本以為筆電進水沒救了，資料都沒備份。交給他們檢測後三天完修，不但電腦救回來，資料也完整無缺！技術真的沒話說！」', name: '林小姐', role: 'ASUS 筆電維修', avatar: '林' },
+                { text: '「工作室原本資料散落各處，請 Su 協助建置企業級 NAS 伺服器並規劃自動備份後，再也不怕硬碟損壞，效率大幅提升！」', name: '王店長', role: '伺服器與備份建置', avatar: '王' },
+                { text: '「這次請他們組裝高階水冷機，走線極致完美，完全看不到雜亂線材。交機前還燒機測試了一整天，讓人非常放心，大推！」', name: '陳先生', role: '高階水冷組裝', avatar: '陳' }
+            ],
+            bookingTitle: '線上報修預約',
+            bookingSubtitle: '遇到電腦問題？立即留下您的狀況，系統將同步至雲端，技師將快速為您評估。',
+            sectionHeroTitle: '全方位科技解決方案',
+            sectionAboutTagline: 'Since 2016'
         }
     };
 
@@ -2435,6 +2692,64 @@ window.navigate = function(viewName, targetId = null) {
         safeSet('cms-contact-phone-link', 'href', `tel:${purePhone}`);
         safeSet('cms-contact-address', 'innerText', cms.contactAddress);
         safeSet('cms-contact-address-link', 'href', `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cms.contactAddress)}`);
+
+        // Tagline & About
+        if (cms.sectionAboutTagline) safeSet('cms-tagline', 'innerText', cms.sectionAboutTagline);
+
+        // Booking section
+        if (cms.bookingTitle) {
+            const bTitle = document.querySelector('#board .section-title');
+            if (bTitle) bTitle.innerHTML = cms.bookingTitle;
+        }
+        if (cms.bookingSubtitle) {
+            const bSub = document.querySelector('#board .section-subtitle');
+            if (bSub) bSub.innerHTML = cms.bookingSubtitle;
+        }
+
+        // Services
+        if (cms.services && cms.services.length) {
+            const cards = document.querySelectorAll('.service-card');
+            cms.services.forEach((sv, i) => {
+                if (cards[i]) {
+                    const h3 = cards[i].querySelector('h3');
+                    const p = cards[i].querySelector('p');
+                    if (h3) h3.innerText = sv.title;
+                    if (p) p.innerText = sv.desc;
+                }
+            });
+        }
+
+        // Portfolio
+        if (cms.portfolio && cms.portfolio.length) {
+            const pcards = document.querySelectorAll('.portfolio-card');
+            cms.portfolio.forEach((pf, i) => {
+                if (pcards[i]) {
+                    const img = pcards[i].querySelector('img');
+                    const h3 = pcards[i].querySelector('.portfolio-info h3');
+                    const p = pcards[i].querySelector('.portfolio-info p');
+                    if (img) { img.src = pf.img; img.alt = pf.title; }
+                    if (h3) h3.innerText = pf.title;
+                    if (p) p.innerText = pf.sub;
+                }
+            });
+        }
+
+        // Reviews
+        if (cms.reviews && cms.reviews.length) {
+            const rcards = document.querySelectorAll('.review-card');
+            cms.reviews.forEach((rv, i) => {
+                if (rcards[i]) {
+                    const txt = rcards[i].querySelector('.review-text');
+                    const nm = rcards[i].querySelector('.review-name');
+                    const rl = rcards[i].querySelector('.review-role');
+                    const av = rcards[i].querySelector('.review-avatar');
+                    if (txt) txt.innerText = rv.text;
+                    if (nm) nm.innerText = rv.name;
+                    if (rl) rl.innerText = rv.role;
+                    if (av) av.innerText = rv.avatar;
+                }
+            });
+        }
     }
 
     function renderNewsFront() {
@@ -2609,9 +2924,30 @@ window.navigate = function(viewName, targetId = null) {
                 safeSet('cmsAboutTitle','value',cms.aboutTitle);
                 safeSet('cmsAboutDesc','value',cms.aboutText);
                 safeSet('cmsAboutImg','value',cms.aboutImg);
+                safeSet('cmsAboutTagline','value',cms.sectionAboutTagline||'Since 2016');
                 safeSet('cmsContactLine','value',cms.contactLine);
                 safeSet('cmsContactPhone','value',cms.contactPhone);
                 safeSet('cmsContactAddress','value',cms.contactAddress);
+                safeSet('cmsBookingTitle','value',cms.bookingTitle||'線上報修預約');
+                safeSet('cmsBookingSubtitle','value',cms.bookingSubtitle||'');
+                // Services
+                if (cms.services) cms.services.forEach((sv, i) => {
+                    safeSet('cmsSvc'+(i+1)+'Title','value',sv.title||'');
+                    safeSet('cmsSvc'+(i+1)+'Desc','value',sv.desc||'');
+                });
+                // Portfolio
+                if (cms.portfolio) cms.portfolio.forEach((pf, i) => {
+                    safeSet('cmsPf'+(i+1)+'Img','value',pf.img||'');
+                    safeSet('cmsPf'+(i+1)+'Title','value',pf.title||'');
+                    safeSet('cmsPf'+(i+1)+'Sub','value',pf.sub||'');
+                });
+                // Reviews
+                if (cms.reviews) cms.reviews.forEach((rv, i) => {
+                    safeSet('cmsRv'+(i+1)+'Text','value',rv.text||'');
+                    safeSet('cmsRv'+(i+1)+'Name','value',rv.name||'');
+                    safeSet('cmsRv'+(i+1)+'Role','value',rv.role||'');
+                    safeSet('cmsRv'+(i+1)+'Avatar','value',rv.avatar||'');
+                });
                 renderTicketsAdmin(); renderNewsAdmin();
             } else { alert('Access Denied: 驗證失敗！'); }
         } catch { alert('安全性驗證發生錯誤。'); }
@@ -2639,20 +2975,55 @@ window.navigate = function(viewName, targetId = null) {
         if (s2) slides.push({ img: s2, title: document.getElementById('cmsS2Title').value, desc: document.getElementById('cmsS2Desc').value });
         const s3 = document.getElementById('cmsS3Img').value;
         if (s3) slides.push({ img: s3, title: document.getElementById('cmsS3Title').value, desc: document.getElementById('cmsS3Desc').value });
+
+        // Collect services
+        const services = [];
+        for (let i = 1; i <= 6; i++) {
+            const t = (document.getElementById('cmsSvc' + i + 'Title') || {}).value || '';
+            const d = (document.getElementById('cmsSvc' + i + 'Desc') || {}).value || '';
+            services.push({ title: t, desc: d });
+        }
+
+        // Collect portfolio
+        const portfolio = [];
+        for (let i = 1; i <= 3; i++) {
+            const img = (document.getElementById('cmsPf' + i + 'Img') || {}).value || '';
+            const title = (document.getElementById('cmsPf' + i + 'Title') || {}).value || '';
+            const sub = (document.getElementById('cmsPf' + i + 'Sub') || {}).value || '';
+            portfolio.push({ img, title, sub });
+        }
+
+        // Collect reviews
+        const reviews = [];
+        for (let i = 1; i <= 3; i++) {
+            const text = (document.getElementById('cmsRv' + i + 'Text') || {}).value || '';
+            const name = (document.getElementById('cmsRv' + i + 'Name') || {}).value || '';
+            const role = (document.getElementById('cmsRv' + i + 'Role') || {}).value || '';
+            const avatar = (document.getElementById('cmsRv' + i + 'Avatar') || {}).value || '';
+            reviews.push({ text, name, role, avatar });
+        }
+
         const newCms = {
             color: document.getElementById('cmsColor').value,
             showGrid: document.getElementById('cmsShowGrid').checked,
-            slides, aboutTitle: document.getElementById('cmsAboutTitle').value,
+            slides,
+            aboutTitle: document.getElementById('cmsAboutTitle').value,
             aboutText: document.getElementById('cmsAboutDesc').value,
             aboutImg: document.getElementById('cmsAboutImg').value,
+            sectionAboutTagline: (document.getElementById('cmsAboutTagline') || {}).value || 'Since 2016',
             contactLine: document.getElementById('cmsContactLine').value,
             contactPhone: document.getElementById('cmsContactPhone').value,
-            contactAddress: document.getElementById('cmsContactAddress').value
+            contactAddress: document.getElementById('cmsContactAddress').value,
+            bookingTitle: (document.getElementById('cmsBookingTitle') || {}).value || '線上報修預約',
+            bookingSubtitle: (document.getElementById('cmsBookingSubtitle') || {}).value || '',
+            services,
+            portfolio,
+            reviews
         };
         try {
             await updateDoc(dbRef, { cms: newCms });
             alert('✅ 全站版面設定已成功儲存並同步至前台！');
-        } catch { alert('儲存失敗，請確認 Firebase 權限。'); }
+        } catch(e) { console.error(e); alert('儲存失敗，請確認 Firebase 權限。'); }
     };
 
     window.addNews = async function() {
