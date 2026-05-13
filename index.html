@@ -1240,11 +1240,11 @@
             z-index: 1001; opacity: 0; pointer-events: none;
             transform: translateY(20px) scale(0.9);
             border-radius: 50%;
-            overflow: hidden;
+            /* 移除 overflow: hidden，避免觸發背景合成造成灰色光暈 */
         }
         .back-to-top::before {
             content: '';
-            position: absolute; inset: 0;
+            position: absolute; inset: -2px;
             border-radius: 50%;
             background: conic-gradient(
                 from 0deg,
@@ -1258,8 +1258,11 @@
             animation: bttSpin 4s linear infinite;
             opacity: 0;
             transition: opacity 0.4s;
-            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), white calc(100% - 2px));
-            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), white calc(100% - 2px));
+            -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), white calc(100% - 3px));
+            mask: radial-gradient(farthest-side, transparent calc(100% - 3px), white calc(100% - 3px));
+            will-change: transform;
+            /* 強制獨立合成層，避免與 backdrop-filter 互相干擾 */
+            isolation: isolate;
         }
         .back-to-top::after { content: none; }
         @keyframes bttSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
