@@ -449,6 +449,8 @@
             display: none; background: none; border: none;
             font-size: 1.4rem; cursor: pointer; color: var(--deep);
             transition: var(--t-fast);
+            margin-left: auto;
+            padding-right: 4px;
         }
         .menu-toggle:hover { color: var(--gold); }
 
@@ -2687,6 +2689,20 @@ document.querySelectorAll('.dropdown-container > span').forEach(el => {
         e.preventDefault(); e.stopPropagation();
     });
 });
+
+// 滑動時自動收回手機選單
+let menuScrollStartY = 0;
+window.addEventListener('touchstart', (e) => {
+    menuScrollStartY = e.touches[0].clientY;
+}, { passive: true });
+window.addEventListener('touchmove', (e) => {
+    if (!navMenu.classList.contains('show')) return;
+    const deltaY = Math.abs(e.touches[0].clientY - menuScrollStartY);
+    if (deltaY > 30) {
+        navMenu.classList.remove('show');
+        document.querySelectorAll('.dropdown-container').forEach(c => c.classList.remove('active'));
+    }
+}, { passive: true });
 
 /* ================================================================
    REVEAL OBSERVER
