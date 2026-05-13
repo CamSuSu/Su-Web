@@ -680,20 +680,41 @@
         .booking-section .section-title {
             position: relative;
             display: inline-block;
+            background: linear-gradient(
+                120deg,
+                var(--deep)        0%,
+                var(--gold-dim)    25%,
+                var(--gold-bright) 45%,
+                #fffbe8            55%,
+                var(--gold-bright) 65%,
+                var(--gold-dim)    80%,
+                var(--deep)        100%
+            );
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: bookingTitleShimmer 15s ease-in-out infinite;
+            filter: drop-shadow(0 2px 16px rgba(184,144,42,0.18));
+        }
+        @keyframes bookingTitleShimmer {
+            0%   { background-position: 200% center; }
+            50%  { background-position: 0%   center; }
+            100% { background-position: 200% center; }
         }
 
-        /* 「線上」「預約」— 逐字浮現 + 深色掃光 */
+        /* 「線上」「預約」— 逐字浮現 + 縮放進場 */
         .booking-section .section-title .title-char {
             display: inline-block;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo);
+            transform: translateY(28px) scale(0.88);
+            transition: opacity 1s var(--ease-expo), transform 1s var(--ease-expo);
         }
         .booking-section .section-title.char-active .title-char:nth-child(1) {
-            opacity: 1; transform: translateY(0); transition-delay: 0s;
+            opacity: 1; transform: translateY(0) scale(1); transition-delay: 0s;
         }
         .booking-section .section-title.char-active .title-char:nth-child(3) {
-            opacity: 1; transform: translateY(0); transition-delay: 0.18s;
+            opacity: 1; transform: translateY(0) scale(1); transition-delay: 0.22s;
         }
 
         /* 掃光底層 */
@@ -703,7 +724,7 @@
             background: linear-gradient(
                 100deg,
                 transparent 20%,
-                rgba(255,255,255,0.55) 50%,
+                rgba(255,255,255,0.62) 50%,
                 transparent 80%
             );
             background-size: 300% auto;
@@ -730,6 +751,7 @@
         }
         .section-center .section-title::after { margin: 28px auto 0; }
         .about-text .section-title::after { margin: 28px 0 0; }
+	.booking-section .section-title::after { display: none; }
 
         .section-subtitle {
             font-family: var(--font-sans);
@@ -1312,23 +1334,24 @@
             50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.8); filter: drop-shadow(0 0 4px var(--gold)); }
         }
 
-        /* 「報修」em — 強烈金色流光 shimmer */
+       /* 「報修」em — 強烈金色流光 shimmer + 光暈 */
         .booking-section .section-title em {
             position: relative;
             display: inline-block;
             background: linear-gradient(
                 90deg,
                 var(--gold-dim)    0%,
-                var(--gold-bright) 30%,
-                #fff5cc            50%,
-                var(--gold-bright) 70%,
+                var(--gold-bright) 28%,
+                #fffde0            48%,
+                var(--gold-bright) 68%,
                 var(--gold-dim)    100%
             );
             background-size: 220% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: bookingShimmer 2.8s ease-in-out infinite;
+            animation: bookingShimmer 2.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(212,175,80,0.55));
         }
         @keyframes bookingShimmer {
             0%, 100% { background-position: 200% center; }
