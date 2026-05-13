@@ -444,6 +444,52 @@
         .btn-premium.ghost:hover { color: var(--gold); border-color: var(--gold); }
         .btn-premium.ghost:hover::before { background: rgba(184,144,42,0.08); }
 
+        /* ── 預約檢測 header 按鈕專屬特效 ── */
+        .header-cta-btn {
+            position: relative;
+        }
+        /* 外框脈衝光圈 */
+        .header-cta-btn::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+            border: 1px solid var(--gold);
+            opacity: 0;
+            animation: ctaPulseRing 2.8s ease-in-out infinite;
+        }
+        @keyframes ctaPulseRing {
+            0%   { opacity: 0;    transform: scale(1);    }
+            30%  { opacity: 0.6; }
+            70%  { opacity: 0;    transform: scale(1.06); }
+            100% { opacity: 0;    transform: scale(1.06); }
+        }
+        /* 文字掃光 */
+        .header-cta-btn span {
+            display: inline-block;
+            background: linear-gradient(
+                100deg,
+                var(--gold-dim)    0%,
+                var(--gold-dim)    30%,
+                var(--gold-bright) 50%,
+                var(--gold-dim)    70%,
+                var(--gold-dim)    100%
+            );
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: ctaShimmer 3s ease-in-out infinite;
+        }
+        .header-cta-btn:hover span {
+            -webkit-text-fill-color: #fff;
+            animation: none;
+        }
+        @keyframes ctaShimmer {
+            0%, 100% { background-position: 200% center; }
+            50%       { background-position: -50% center; }
+        }
+
         /* ── Mobile Toggle ── */
         .menu-toggle {
             display: none; background: none; border: none;
@@ -610,9 +656,68 @@
         }
         .section-title em {
             font-style: italic;
-            color: var(--gold);
             font-family: var(--font-serif);
             padding-right: 3px;
+            background: linear-gradient(
+                90deg,
+                var(--gold-dim)  0%,
+                var(--gold-bright) 35%,
+                var(--gold)      50%,
+                var(--gold-bright) 65%,
+                var(--gold-dim)  100%
+            );
+            background-size: 250% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: goldShimmer 3.5s linear infinite;
+        }
+        @keyframes goldShimmer {
+            0%   { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+	/* ── 線上報修預約 整行標題特效 ── */
+        .booking-section .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* 「線上」「預約」— 逐字浮現 + 深色掃光 */
+        .booking-section .section-title .title-char {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo);
+        }
+        .booking-section .section-title.char-active .title-char:nth-child(1) {
+            opacity: 1; transform: translateY(0); transition-delay: 0s;
+        }
+        .booking-section .section-title.char-active .title-char:nth-child(3) {
+            opacity: 1; transform: translateY(0); transition-delay: 0.18s;
+        }
+
+        /* 掃光底層 */
+        .booking-section .section-title .title-char::after {
+            content: attr(data-text);
+            position: absolute; inset: 0;
+            background: linear-gradient(
+                100deg,
+                transparent 20%,
+                rgba(255,255,255,0.55) 50%,
+                transparent 80%
+            );
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: charGloss 4s ease-in-out infinite;
+        }
+        .booking-section .section-title.char-active .title-char:nth-child(1)::after { opacity: 1; animation-delay: 1s; }
+        .booking-section .section-title.char-active .title-char:nth-child(3)::after { opacity: 1; animation-delay: 1.4s; }
+        @keyframes charGloss {
+            0%, 100% { background-position: 200% center; }
+            50%       { background-position: -50% center; }
         }
 
         .section-title::after {
@@ -1108,7 +1213,128 @@
         /* ================================================================
            BOOKING SECTION
            ================================================================ */
-        .booking-section { background: var(--onyx-2); }
+        /* ── 線上報修預約標題特效 ── */
+        .booking-title-wrap {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+        .booking-title-wrap .section-title {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 標題底部金色展開線 + 脈衝光暈 */
+        .booking-title-wrap::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 1.5px;
+            background: linear-gradient(90deg, transparent, var(--gold-bright), var(--gold), var(--gold-bright), transparent);
+            box-shadow: 0 0 10px rgba(184,144,42,0.6), 0 0 20px rgba(184,144,42,0.2);
+            animation: bookingLineExpand 2.8s var(--ease-expo) forwards;
+            animation-play-state: paused;
+        }
+        .booking-title-wrap.active::after {
+            animation-play-state: running;
+        }
+        @keyframes bookingLineExpand {
+            0%   { width: 0;   opacity: 0; }
+            20%  { opacity: 1; }
+            80%  { width: 88%; opacity: 1; }
+            100% { width: 88%; opacity: 0.7; box-shadow: 0 0 18px rgba(184,144,42,0.9), 0 0 35px rgba(184,144,42,0.4); }
+        }
+
+        /* 展開線收尾後持續脈衝 */
+        .booking-title-wrap.active::after {
+            animation: bookingLineExpand 2.8s var(--ease-expo) forwards, bookingLinePulse 3s ease-in-out infinite 2.8s;
+        }
+        @keyframes bookingLinePulse {
+            0%, 100% { opacity: 0.7; box-shadow: 0 0 8px rgba(184,144,42,0.5); }
+            50%       { opacity: 1;   box-shadow: 0 0 20px rgba(184,144,42,0.9), 0 0 40px rgba(184,144,42,0.3); }
+        }
+
+        /* Tagline 閃爍脈衝 */
+        .booking-tagline-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+        .booking-tagline-wrap .tagline {
+            margin-bottom: 0;
+            animation: bookingTaglinePulse 3s ease-in-out infinite;
+        }
+        @keyframes bookingTaglinePulse {
+            0%, 100% { opacity: 0.75; letter-spacing: 6px; }
+            50%       { opacity: 1;    letter-spacing: 8px; }
+        }
+
+        /* 左右裝飾光柱 */
+        .booking-deco {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .booking-deco-left {
+            left: calc(50% - 300px); top: 50%;
+            transform: translateY(-50%);
+            width: 1px; height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            opacity: 0;
+            animation: bookingDecoFade 1.4s ease forwards 0.8s;
+            box-shadow: 0 0 8px rgba(184,144,42,0.4);
+        }
+        .booking-deco-right {
+            right: calc(50% - 300px); top: 50%;
+            transform: translateY(-50%);
+            width: 1px; height: 100px;
+            background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+            opacity: 0;
+            animation: bookingDecoFade 1.4s ease forwards 0.8s;
+            box-shadow: 0 0 8px rgba(184,144,42,0.4);
+        }
+        .booking-deco-left::before,
+        .booking-deco-right::before {
+            content: '◆';
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--gold);
+            font-size: 0.5rem;
+            animation: bookingDiamondPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes bookingDecoFade {
+            to { opacity: 1; }
+        }
+        @keyframes bookingDiamondPulse {
+            0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+            50%       { opacity: 1;   transform: translate(-50%, -50%) scale(1.8); filter: drop-shadow(0 0 4px var(--gold)); }
+        }
+
+        /* 「報修」em — 強烈金色流光 shimmer */
+        .booking-section .section-title em {
+            position: relative;
+            display: inline-block;
+            background: linear-gradient(
+                90deg,
+                var(--gold-dim)    0%,
+                var(--gold-bright) 30%,
+                #fff5cc            50%,
+                var(--gold-bright) 70%,
+                var(--gold-dim)    100%
+            );
+            background-size: 220% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: bookingShimmer 2.8s ease-in-out infinite;
+        }
+        @keyframes bookingShimmer {
+            0%, 100% { background-position: 200% center; }
+            50%       { background-position: -50% center; }
+        }
+	.booking-section { background: var(--onyx-2); }
         .booking-wrap {
             max-width: 800px; margin: 0 auto;
         }
@@ -1904,7 +2130,7 @@
         </ul>
     </nav>
     <div>
-        <a href="#" onclick="navigate('home','board')" class="btn-premium">預約檢測</a>
+        <a href="#" onclick="navigate('home','board')" class="btn-premium header-cta-btn"><span>預約檢測</span></a>
     </div>
 </header>
 
@@ -2229,8 +2455,14 @@
     <!-- BOOKING -->
     <section class="section booking-section section-center" id="board" style="position:relative;">
         <div class="section-texture-dots"></div>
-        <span class="tagline">Booking</span>
-        <h2 class="section-title reveal">線上<em>報修</em>預約</h2>
+        <div class="booking-tagline-wrap">
+            <span class="tagline">Booking</span>
+        </div>
+        <div class="booking-title-wrap reveal" id="bookingTitleWrap">
+            <div class="booking-deco booking-deco-left"></div>
+            <div class="booking-deco booking-deco-right"></div>
+            <h2 class="section-title" id="bookingMainTitle"><span class="title-char" data-text="線上">線上</span><em>報修</em><span class="title-char" data-text="預約">預約</span></h2>
+        </div>
         <p class="section-subtitle reveal">遇到電腦問題？立即留下您的狀況，系統將同步至雲端，技師將快速為您評估。</p>
         <div class="booking-wrap reveal">
             <div class="booking-card">
@@ -2714,6 +2946,21 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-reveal').forEach(el => observer.observe(el));
+
+// 線上報修預約標題 — 逐字浮現 + 掃光線觸發
+const bookingMainTitle = document.getElementById('bookingMainTitle');
+const bookingTitleWrap = document.getElementById('bookingTitleWrap');
+if (bookingMainTitle && bookingTitleWrap) {
+    const bObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                bookingMainTitle.classList.add('char-active');
+                bookingTitleWrap.classList.add('active');
+            }
+        });
+    }, { threshold: 0.35 });
+    bObserver.observe(bookingTitleWrap);
+}
 
 /* ================================================================
    DIAGNOSTICS
