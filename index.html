@@ -72,26 +72,6 @@
             height: -webkit-fill-available;
             height: 100%;
             background: var(--deep);
-            /* iOS overscroll 彈性區域顏色 — 頂部用 header 色，底部用 footer 深色 */
-            background-attachment: fixed;
-        }
-
-        /* iOS Safari overscroll 底部深色補丁 */
-        html::before {
-            content: '';
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: 200px;
-            background: var(--deep);
-            z-index: -1;
-        }
-        html::after {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 200px;
-            background: rgba(250,248,245,0.96);
-            z-index: -1;
         }
 
         body {
@@ -1232,6 +1212,7 @@
         .footer-col a:hover { color: var(--gold-bright); padding-left: 4px; }
         .footer-bottom {
             text-align: center; padding-top: 35px;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
             border-top: 1px solid rgba(255,255,255,0.08);
             font-family: var(--font-mono);
             font-size: 0.72rem; letter-spacing: 2px; color: rgba(255,255,255,0.25);
@@ -1919,7 +1900,7 @@
 <!-- ================================================================
      HOME VIEW
 ================================================================ -->
-<div id="view-home" class="spa-view active" style="padding-top:0; max-width:100%; padding-left:0; padding-right:0;">
+<div id="view-home" class="spa-view active" style="padding-top:0; max-width:100%; padding-left:0; padding-right:0; background:var(--deep);">
 
     <!-- HERO -->
     <section class="hero">
@@ -2320,7 +2301,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>Copyright <span id="adminTrigger" style="user-select:none;">©</span> 2026 Su. Studio Tech Solutions. All rights reserved. <span style="margin-left:15px; border-left:1px solid #2a2a2a; padding-left:15px;">隱私權政策與使用條款</span></p>
+            <p>Copyright <span id="adminTrigger" style="user-select:none;">©</span> 2026 Su. Studio Tech Solutions. All rights reserved.</p>
+            <p style="margin-top:10px; color:rgba(255,255,255,0.18);">隱私權政策與使用條款</p>
         </div>
     </footer>
 </div>
