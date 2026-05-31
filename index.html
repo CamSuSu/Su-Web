@@ -3035,12 +3035,13 @@ window.navigate = function(viewName, targetId = null) {
     import { getFirestore, doc, setDoc, getDoc, onSnapshot, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
     const firebaseConfig = {
-        apiKey: "AIzaSyBhLO5Fpv0hQ921p1teY_e9Drmfi9jRsQM",
-        authDomain: "sufood-2dc61.firebaseapp.com",
-        projectId: "sufood-2dc61",
-        storageBucket: "sufood-2dc61.firebasestorage.app",
-        messagingSenderId: "15294829611",
-        appId: "1:15294829611:web:f7f244a5be5dcfc69b066e"
+        apiKey: "AIzaSyB8wgbxGxF42lD0oXV-8P3D6X_Z3oV64FE",
+      	authDomain: "su-studio-web.firebaseapp.com",
+      	projectId: "su-studio-web",
+      	storageBucket: "su-studio-web.firebasestorage.app",
+      	messagingSenderId: "727786774702",
+      	appId: "1:727786774702:web:5281a9f2f23d27707c8d3f",
+      	measurementId: "G-R8JKK03ZVW"
     };
 
     let dbRef = null;
@@ -3110,8 +3111,13 @@ window.navigate = function(viewName, targetId = null) {
     }
 
     function escapeHTML(str) {
-        return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-    }
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
 
     function applyCMS(cms) {
         document.documentElement.style.setProperty('--accent-color', cms.color);
