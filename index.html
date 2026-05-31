@@ -3116,7 +3116,7 @@ window.navigate = function(viewName, targetId = null) {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+        .replace(/'/g, '&#39;');
 }
 
     function applyCMS(cms) {
@@ -3176,7 +3176,7 @@ window.navigate = function(viewName, targetId = null) {
         const purePhone = cms.contactPhone.replace(/\D/g,'');
         safeSet('cms-contact-phone-link', 'href', `tel:${purePhone}`);
         safeSet('cms-contact-address', 'innerText', cms.contactAddress);
-        safeSet('cms-contact-address-link', 'href', `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(cms.contactAddress)}`);
+        safeSet('cms-contact-address-link', 'href', `https://maps.google.com/maps?q=${encodeURIComponent(cms.contactAddress)}`);
 
         // Generate LINE QR Code
         const qrContainer = document.getElementById('line-qr-canvas');
